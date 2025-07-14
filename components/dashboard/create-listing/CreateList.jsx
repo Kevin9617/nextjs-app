@@ -100,12 +100,7 @@ const CreateList = () => {
       </div>
       {/* End .col */}
 
-      <div className="col-xl-12">
-        <div className="my_profile_setting_input">
-          <button className="btn btn1 float-start">Back</button>
-          <button className="btn btn2 float-end">Next</button>
-        </div>
-      </div>
+      {/* Remove the Send button section at the end of the form */}
     </>
   );
 };
