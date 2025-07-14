@@ -1,0 +1,67 @@
+
+
+import "photoswipe/dist/photoswipe.css";
+import CopyrightFooter from "@/components/common/footer/CopyrightFooter";
+import Footer from "@/components/common/footer/Footer";
+import Header from "@/components/common/header/DefaultHeader";
+import MobileMenu from "@/components/common/header/MobileMenu";
+import PopupSignInUp from "@/components/common/PopupSignInUp";
+import properties from "@/data/properties";
+import DetailsContent from "@/components/listing-details-v1/DetailsContent";
+import Sidebar from "@/components/listing-details-v1/Sidebar";
+import ListingTwo from "@/components/listing-single/ListingTwo";
+
+const ListingDynamicDetailsV2 = async props => {
+  const params = await props.params;
+  const id = params.id;
+  const property = properties?.find((item) => item.id == id) || properties[0];
+
+  return (
+    <>
+      <Header />
+      <MobileMenu />
+      <PopupSignInUp />
+      <ListingTwo property={property} />
+      <section className="our-agent-single bgc-f7 pb30-991">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-12 col-lg-8">
+              <div className="listing_single_description2 mt30-767 mb30-767">
+                <div className="single_property_title">
+                  <h2>{property?.title}</h2>
+                  <p>{property?.location}</p>
+                </div>
+                <div className="single_property_social_share style2 static-title">
+                  <div className="price">
+                    <h2>
+                      ${property.price}
+                      <small>/mo</small>
+                    </h2>
+                  </div>
+                </div>
+              </div>
+              <DetailsContent />
+            </div>
+            <div className="col-lg-4 col-xl-4">
+              <Sidebar />
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="footer_one">
+        <div className="container">
+          <div className="row">
+            <Footer />
+          </div>
+        </div>
+      </section>
+      <section className="footer_middle_area pt40 pb40">
+        <div className="container">
+          <CopyrightFooter />
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default ListingDynamicDetailsV2;
