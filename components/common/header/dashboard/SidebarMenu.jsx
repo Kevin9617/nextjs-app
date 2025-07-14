@@ -1,6 +1,8 @@
 'use client'
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 import {
   isParentPageActive,
@@ -10,7 +12,51 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const SidebarMenu = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const decoded = jwtDecode(token);
+          setUserName(decoded.username || "");
+          setUserEmail(decoded.email || "");
+        } catch (e) {
+          setUserName("");
+          setUserEmail("");
+        }
+      }
+      const handleLogin = () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+          try {
+            const decoded = jwtDecode(token);
+            setUserName(decoded.username || "");
+            setUserEmail(decoded.email || "");
+          } catch (e) {
+            setUserName("");
+            setUserEmail("");
+          }
+        } else {
+          setUserName("");
+          setUserEmail("");
+        }
+      };
+      const handleLogout = () => {
+        setUserName("");
+        setUserEmail("");
+      };
+      window.addEventListener("login", handleLogin);
+      window.addEventListener("logout", handleLogout);
+      return () => {
+        window.removeEventListener("login", handleLogin);
+        window.removeEventListener("logout", handleLogout);
+      };
+    }
+  }, []);
 
   const myProperties = [
     { id: 1, name: "General Elements", route: "/my-properties" },
@@ -39,6 +85,20 @@ const SidebarMenu = () => {
 
   return (
     <>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '24px 24px 0 24px' }}>
+        <Image
+          width={45}
+          height={45}
+          className="rounded-circle"
+          src="/assets/images/team/e1.png"
+          alt="avatar"
+        />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          {userName && <span style={{ color: 'white', fontWeight: 600 }}>{userName}</span>}
+          {userEmail && <span style={{ color: 'white', fontSize: '0.9em', opacity: 0.8 }}>{userEmail}</span>}
+        </div>
+      </div>
+      {/* End user info */}
       <ul className="sidebar-menu">
         <li className="sidebar_header header">
           <Link href="/">

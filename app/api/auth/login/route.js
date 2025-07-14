@@ -24,7 +24,12 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: 'Invalid password' }), { status: 400 });
     }
     console.log(user.username);
-    const token = jwt.sign({ id: user.id, username: user.username, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ 
+      id: user.id, 
+      username: user.username, 
+      email: user.email, 
+      role: user.role || 'user' 
+    }, JWT_SECRET, { expiresIn: '24h' });
     console.log('Login successful for:', { username, email });
     return Response.json({ token }, { status: 200 });
   } catch (err) {

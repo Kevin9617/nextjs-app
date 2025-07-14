@@ -311,19 +311,24 @@ const MobileMenuContent = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
       setUserEmail(localStorage.getItem("email") || "");
+      setUserRole(localStorage.getItem("userRole") || "");
+      
       const handleLogin = () => {
         setIsLoggedIn(true);
         setUserEmail(localStorage.getItem("email") || "");
+        setUserRole(localStorage.getItem("userRole") || "");
       };
       const handleLogout = () => {
         setIsLoggedIn(false);
         setUserEmail("");
+        setUserRole("");
       };
       window.addEventListener("login", handleLogin);
       window.addEventListener("logout", handleLogout);
@@ -443,7 +448,7 @@ const MobileMenuContent = () => {
                 : 'inactive-mobile-menu'
             }
           >
-            {property.map((item) => (
+            {userRole === 'admin' && property.map((item) => (
               <SubMenu
               label={item.title}
                 className={
@@ -566,29 +571,34 @@ const MobileMenuContent = () => {
   </>
 ) : null}
 
-          <MenuItem>
-            <div
-            onClick={()=>router.push("/create-listing")}
-         
-              className={
-                pathname === "/create-listing" ? "ui-active" : 'inactive-mobile-menu'
-              }
-            >
-              <span className="flaticon-plus"></span> Create Listing
-            </div>
-          </MenuItem>
+          {userRole === 'admin' && (
+            <MenuItem>
+              <div
+              onClick={()=>router.push("/create-listing")}
+           
+                className={
+                  pathname === "/create-listing" ? "ui-active" : 'inactive-mobile-menu'
+                }
+              >
+                <span className="flaticon-plus"></span> Create Listing
+              </div>
+            </MenuItem>
+          )}
         </Menu>
         </div>
       {/* </Sidebar> */}
 
       
-        <Link
-          href="/create-listing"
-          className="btn btn-block btn-lg btn-thm circle"
-          style={{width:'90%',margin:'0px auto'}}
-        >
-          <span className="flaticon-plus"></span> Create Listing
-        </Link></>
+        {userRole === 'admin' && (
+          <Link
+            href="/create-listing"
+            className="btn btn-block btn-lg btn-thm circle"
+            style={{width:'90%',margin:'0px auto'}}
+          >
+            <span className="flaticon-plus"></span> Create Listing
+          </Link>
+        )}
+      </>
      
    
   );

@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const LoginSignup = () => {
   // Registration state
@@ -75,10 +75,17 @@ const LoginSignup = () => {
         console.log("Token received:", data.token);
         let emailToSave = '';
         try {
-          const decoded = jwt_decode(data.token);
+          const decoded = jwtDecode(data.token);
           console.log("Decoded JWT:", decoded);
           if (decoded.email) {
             emailToSave = decoded.email;
+          }
+          if (decoded.username) {
+            localStorage.setItem("username", decoded.username);
+          }
+          // Save user role
+          if (decoded.role) {
+            localStorage.setItem("userRole", decoded.role);
           }
         } catch (e) {
           console.error("JWT decode error:", e);

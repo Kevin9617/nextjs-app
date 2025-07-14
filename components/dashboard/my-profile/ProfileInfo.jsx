@@ -1,9 +1,28 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const ProfileInfo = () => {
     const [profile, setProfile] = useState(null);
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    const decoded = jwtDecode(token);
+                    setUserName(decoded.username || "");
+                    setUserEmail(decoded.email || "");
+                } catch (e) {
+                    setUserName("");
+                    setUserEmail("");
+                }
+            }
+        }
+    }, []);
 
     // upload profile
     const uploadProfile = (e) => {
@@ -49,6 +68,8 @@ const ProfileInfo = () => {
                         className="form-control"
                         id="formGroupExampleInput1"
                         placeholder="alitfn"
+                        value={userName}
+                        readOnly
                     />
                 </div>
             </div>
@@ -62,6 +83,8 @@ const ProfileInfo = () => {
                         className="form-control"
                         id="formGroupExampleEmail"
                         placeholder="creativelayers@gmail.com"
+                        value={userEmail}
+                        readOnly
                     />
                 </div>
             </div>
