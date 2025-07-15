@@ -64,14 +64,14 @@ const MyAccount = ({ onLogout }) => {
               {item.name}
             </a>
           ) : (
-            <Link
-              href={item.ruterPath}
-              key={item.id}
-              className="dropdown-item"
+          <Link
+            href={item.ruterPath}
+            key={item.id}
+            className="dropdown-item"
               style={{ color: isSinglePageActive(`${item.ruterPath}`, pathname) ? "#ff5a5f" : "#222", transition: 'color 0.2s' }}
-            >
-              {item.name}
-            </Link>
+          >
+            {item.name}
+          </Link>
           )
         )}
       </div>

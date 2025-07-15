@@ -29,7 +29,6 @@ export async function POST(req) {
         emptyToNull(bedrooms), emptyToNull(bathrooms), emptyToNull(garages), emptyToNull(garagesSize), emptyToNull(yearBuilt), emptyToNull(videoUrl), emptyToNull(virtualTour)
       ]
     );
-    console.log(result);
     return new Response(JSON.stringify({ success: true, id: Number(result.insertId) }), { status: 201 });
   } catch (err) {
     console.error(err);

@@ -164,11 +164,8 @@ const index = () => {
                           <label htmlFor="status">Status</label>
                           <select className="selectpicker form-select" id="status" value={form.status} onChange={handleSelectChange}>
                             <option value="">Select Status</option>
-                            <option value="Status1">Status1</option>
-                            <option value="Status2">Status2</option>
-                            <option value="Status3">Status3</option>
-                            <option value="Status4">Status4</option>
-                            <option value="Status5">Status5</option>
+                            <option value="pending">Pending</option>
+                            <option value="active">Active</option>
                           </select>
                         </div>
                       </div>

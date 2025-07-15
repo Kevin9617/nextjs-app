@@ -1,3 +1,4 @@
+'use client'
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
@@ -5,8 +6,33 @@ import TableData from "./TableData";
 import Filtering from "./Filtering";
 import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
+import { useState } from "react";
 
-const index = () => {
+const PAGE_SIZE = 10;
+
+const Index = () => {
+  const [search, setSearch] = useState(""); // actual search term for API
+  const [inputValue, setInputValue] = useState(""); // input field value
+  const [filter, setFilter] = useState("");
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  // TableData will call this to update total count
+  const handleTotalChange = (newTotal) => {
+    setTotal(newTotal);
+  };
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+
+  // Only update search (and trigger API) when Enter is pressed
+  const handleSearchInput = (value, enterPressed = false) => {
+    setInputValue(value);
+    if (enterPressed) {
+      setSearch(value);
+      setPage(1);
+    }
+  };
+
   return (
     <>
       {/* <!-- Main Header Nav --> */}
@@ -52,7 +78,7 @@ const index = () => {
 
                 <div className="col-lg-4 col-xl-4 mb10">
                   <div className="breadcrumb_content style2 mb30-991">
-                    <h2 className="breadcrumb_title">My Favorites</h2>
+                    <h2 className="breadcrumb_title">My Properties</h2>
                     <p>We are glad to see you again!</p>
                   </div>
                 </div>
@@ -63,13 +89,16 @@ const index = () => {
                     <ul className="mb0">
                       <li className="list-inline-item">
                         <div className="candidate_revew_search_box course fn-520">
-                          <SearchBox />
+                          <SearchBox
+                            value={inputValue}
+                            onChange={(val, enter) => handleSearchInput(val, enter)}
+                          />
                         </div>
                       </li>
                       {/* End li */}
 
                       <li className="list-inline-item">
-                        <Filtering />
+                        <Filtering value={filter} onChange={setFilter} />
                       </li>
                       {/* End li */}
                     </ul>
@@ -81,12 +110,22 @@ const index = () => {
                   <div className="my_dashboard_review mb40">
                     <div className="property_table">
                       <div className="table-responsive mt0">
-                        <TableData />
+                        <TableData
+                          search={search}
+                          filter={filter}
+                          page={page}
+                          onTotalChange={handleTotalChange}
+                        />
                       </div>
                       {/* End .table-responsive */}
 
-                      <div className="mbp_pagination">
-                        <Pagination />
+                      <div className="mbp_pagination text-center">
+                        <div style={{marginBottom: 8, fontWeight: 500}}>
+                          {total === 0
+                            ? 'No properties found.'
+                            : `Showing ${(page-1)*PAGE_SIZE+1}–${Math.min(page*PAGE_SIZE, total)} of ${total} properties (Page ${page} of ${totalPages})`}
+                        </div>
+                        <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
                       </div>
                       {/* End .mbp_pagination */}
                     </div>
@@ -114,4 +153,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
