@@ -7,6 +7,7 @@ import CreateList from "./CreateList";
 import DetailedInfo from "./DetailedInfo";
 import FloorPlans from "./FloorPlans";
 import LocationField from "./LocationField";
+import PropertyMediaUploader from "./PropertyMediaUploader";
 
 const initialForm = {
   propertyTitle: "",
@@ -33,7 +34,22 @@ const initialForm = {
   garagesSize: "",
   yearBuilt: "",
   videoUrl: "",
-  virtualTour: ""
+  virtualTour: "",
+  media_image1: "",
+  media_image2: "",
+  media_image3: "",
+  media_image4: "",
+  media_image5: "",
+  attachment1: "",
+  attachment2: "",
+  planDescription: "",
+  planBedrooms: "",
+  planBathrooms: "",
+  planPrice: "",
+  planSize: "",
+  planImage: "",
+  pricePostfix: "",
+  planTitle: "",
 };
 
 const index = () => {
@@ -163,7 +179,6 @@ const index = () => {
                         <div className="my_profile_setting_input ui_kit_select_search form-group">
                           <label htmlFor="status">Status</label>
                           <select className="selectpicker form-select" id="status" value={form.status} onChange={handleSelectChange}>
-                            <option value="">Select Status</option>
                             <option value="pending">Pending</option>
                             <option value="active">Active</option>
                           </select>
@@ -332,13 +347,20 @@ const index = () => {
                       </div>
                     </div>
                   </div>
+                  <div className="my_dashboard_review mt30">
+                    <div className="col-lg-12">
+                      <h3 className="mb30">Property media</h3>
+                    </div>
+                    <PropertyMediaUploader form={form} setForm={setForm} maxImages={5} />
+                  </div>
                   {/* Floor Plans Section (not included in DB for now) */}
                   <div className="my_dashboard_review mt30">
                     <div className="col-lg-12">
                       <h3 className="mb30">Floor Plans</h3>
                       <button className="btn admore_btn mb30">Add More</button>
                     </div>
-                    <FloorPlans />
+
+                    <FloorPlans form={form} setForm={setForm} />
                   </div>
                   {/* Send Button */}
                   <div className="my_dashboard_review mt30">

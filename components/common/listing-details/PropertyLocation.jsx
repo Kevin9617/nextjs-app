@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-const PropertyLocation = () => {
+const PropertyLocation = ({ property }) => {
+  // Use property.map_url if available, otherwise fallback
+  const mapSrc = property?.map_url ||
+    (property?.lat && property?.lng
+      ? `https://maps.google.com/maps?q=${property.lat},${property.lng}&z=15&output=embed`
+      : "https://www.google.com/maps/d/embed?mid=1tJl0-uRax4AKBfbh1eLPLX5WzOk&hl=en&ehbc=2E312F");
+
   return (
     <>
       <div className="thumb">
@@ -9,7 +15,7 @@ const PropertyLocation = () => {
             <iframe
               title="map"
               className="gmap_iframe"
-              src="https://www.google.com/maps/d/embed?mid=1tJl0-uRax4AKBfbh1eLPLX5WzOk&hl=en&ehbc=2E312F"
+              src={mapSrc}
             ></iframe>
           </div>
         </div>

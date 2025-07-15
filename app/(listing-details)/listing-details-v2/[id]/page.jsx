@@ -1,37 +1,69 @@
-
+'use client'
+import { useEffect, useState } from "react";
 import "photoswipe/dist/photoswipe.css";
 import CopyrightFooter from "@/components/common/footer/CopyrightFooter";
 import Footer from "@/components/common/footer/Footer";
 import Header from "@/components/common/header/DefaultHeader";
 import MobileMenu from "@/components/common/header/MobileMenu";
 import PopupSignInUp from "@/components/common/PopupSignInUp";
-import properties from "@/data/properties";
-import DetailsContent from "@/components/listing-details-v1/DetailsContent";
-import Sidebar from "@/components/listing-details-v1/Sidebar";
-import ListingTwo from "@/components/listing-single/ListingTwo";
+import DetailsContent from "@/components/listing-details-v2/DetailsContent";
+import Sidebar from "@/components/listing-details-v2/Sidebar";
+import ListingGallery2 from "@/components/common/listing-details/ListingGallery2";
+import { useParams } from "next/navigation";
 
-const ListingDynamicDetailsV2 = async props => {
-  const params = await props.params;
+const ListingDynamicDetailsV2 = () => {
+  const { id } = useParams();
+  const [property, setProperty] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
 
-  const id = params.id;
-  const property = properties?.find((item) => item.id == id) || properties[0]
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    fetch(`/api/property/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Not found');
+        return res.json();
+      })
+      .then(data => {
+        setProperty(data);
+        setNotFound(false);
+      })
+      .catch(() => {
+        setProperty(null);
+        setNotFound(true);
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
 
+  if (loading) {
+    return <div style={{padding: 40, textAlign: 'center'}}><h2>Loading...</h2></div>;
+  }
+
+  if (notFound || !property) {
+    return (
+      <div style={{padding: 40, textAlign: 'center'}}>
+        <h2>Property Not Found</h2>
+        <p>The property you are looking for does not exist.</p>
+      </div>
+    );
+  }
 
   return (
     <>
       {/* <!-- Main Header Nav --> */}
       <Header />
-
       {/* <!--  Mobile Menu --> */}
       <MobileMenu />
-
       {/* <!-- Modal --> */}
       <PopupSignInUp />
 
       {/* <!-- Listing Single Property --> */}
-
-      <ListingTwo property={property} />
-      
+      <section className="single_page_listing_style p0 mt85 md-mt0">
+        <div className="container-fluid p0">
+          <ListingGallery2 property={property} />
+        </div>
+      </section>
 
       {/* <!-- Agent Single Grid View --> */}
       <section className="our-agent-single bgc-f7 pb30-991">
@@ -53,11 +85,9 @@ const ListingDynamicDetailsV2 = async props => {
                 </div>
               </div>
               {/* End .listing_single_description2 */}
-
-              <DetailsContent />
+              <DetailsContent property={property} />
             </div>
             {/* End details content .col-lg-8 */}
-
             <div className="col-lg-4 col-xl-4">
               <Sidebar />
             </div>
@@ -66,7 +96,6 @@ const ListingDynamicDetailsV2 = async props => {
           {/* End .row */}
         </div>
       </section>
-
       {/* <!-- Our Footer --> */}
       <section className="footer_one">
         <div className="container">
@@ -75,7 +104,6 @@ const ListingDynamicDetailsV2 = async props => {
           </div>
         </div>
       </section>
-
       {/* <!-- Our Footer Bottom Area --> */}
       <section className="footer_middle_area pt40 pb40">
         <div className="container">

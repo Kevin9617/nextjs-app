@@ -552,22 +552,22 @@ const MobileMenuContent = () => {
 
           {!isLoggedIn ? (
   <>
-    <MenuItem>
-      <div
+          <MenuItem>
+            <div
         onClick={() => router.push("/login")}
-        className={pathname === "/login" ? "ui-active" : 'inactive-mobile-menu'}
-      >
-        <span className="flaticon-user"></span> Login
-      </div>
-    </MenuItem>
-    <MenuItem>
-      <div
+              className={pathname === "/login" ? "ui-active" : 'inactive-mobile-menu'}
+            >
+              <span className="flaticon-user"></span> Login
+            </div>
+          </MenuItem>
+          <MenuItem>
+            <div
         onClick={() => router.push("/register")}
         className={pathname === "/register" ? "ui-active" : 'inactive-mobile-menu'}
-      >
-        <span className="flaticon-edit"></span> Register
-      </div>
-    </MenuItem>
+            >
+              <span className="flaticon-edit"></span> Register
+            </div>
+          </MenuItem>
   </>
 ) : null}
 
@@ -590,12 +590,12 @@ const MobileMenuContent = () => {
 
       
         {userRole === 'admin' && (
-          <Link
-            href="/create-listing"
-            className="btn btn-block btn-lg btn-thm circle"
-            style={{width:'90%',margin:'0px auto'}}
-          >
-            <span className="flaticon-plus"></span> Create Listing
+        <Link
+          href="/create-listing"
+          className="btn btn-block btn-lg btn-thm circle"
+          style={{width:'90%',margin:'0px auto'}}
+        >
+          <span className="flaticon-plus"></span> Create Listing
           </Link>
         )}
       </>

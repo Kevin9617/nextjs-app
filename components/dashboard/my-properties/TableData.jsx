@@ -1,12 +1,14 @@
 'use client'
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const PAGE_SIZE = 10;
 
 const TableData = ({ search, filter, page, onTotalChange }) => {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const fetchData = async () => {
     setLoading(true);
@@ -46,7 +48,12 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
     "Action",
   ];
   let tbodyContent = properties.map((item) => (
-    <tr key={item.id}>
+    <tr key={item.id}
+        style={{ cursor: 'pointer' }}
+        onClick={() => router.push(`/listing-details-v2/${item.id}`)}
+        onMouseOver={e => e.currentTarget.style.background = '#f5f5f5'}
+        onMouseOut={e => e.currentTarget.style.background = ''}
+    >
       <td scope="row">
         <div className="feat_property list favorite_page style2">
           <div className="thumb">
@@ -54,7 +61,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
               width={150}
               height={220}
               className="img-whp cover"
-              src={item.img || "/assets/images/property/default.jpg"}
+              src={item.media_image1 ? `/uploads/${item.media_image1}` : "/assets/images/property/default.jpg"}
               alt={item.title || "property"}
             />
             <div className="thmb_cntnt">

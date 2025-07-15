@@ -1,114 +1,38 @@
-import Image from "next/image";
+import React from "react";
 
-const FloorPlans = () => {
+const FloorPlans = ({ property }) => {
   return (
-    <div className="accordion" id="accordionExample">
-      <div className="card floor_plan">
-        <div id="headingOne">
-          <h2 className="mb-0">
-            <button
-              className="btn btn-link accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseOne"
-              aria-expanded="false"
-              aria-controls="collapseOne"
-            >
-              <ul className="mb0 d-flex align-items-cener flex-wrap">
-                <li className="d-inline-flex list-inline-item">First Floor</li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Size:</p> <span>1267 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Rooms:</p> <span>670 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Baths:</p> <span>530 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Price:</p> <span>$1489</span>
-                </li>
-              </ul>
-            </button>
-          </h2>
-        </div>
-        <div
-          id="collapseOne"
-          className="collapse"
-          aria-labelledby="headingOne"
-          data-bs-parent="#accordionExample"
-        >
-          <div className="card-body text-center">
-            <Image
-              width={619}
-              height={465}
-              className="img-fluid w-100 h-100 cover"
-              src="/assets/images/resource/floor_plan.png"
-              alt="floor_plan.png"
-            />
-            <p>
-              Plan description. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-              laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis
-              nisl ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-        </div>
+    <div
+      className="card floor_plan"
+      style={{
+        border: '2px solid #ff5a5f',
+        borderRadius: 8,
+        background: '#fff',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+        padding: '14px 24px',
+        color: '#222',
+        fontWeight: 500,
+        margin: '24px auto',
+        marginBottom: 24,
+        maxWidth: 900,
+        minHeight: 48,
+      }}
+    >
+      <div style={{
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        flexWrap: 'nowrap',
+        whiteSpace: 'nowrap',
+        overflowX: 'auto',
+      }}>
+        <span style={{ fontWeight: 700, marginRight: 10, color: '#ff5a5f' }}>{property?.planTitle || 'Plan Title'}</span>
+        <span style={{ marginRight: 10, color: '#222' }}>Size:<span style={{ fontWeight: 700, color: '#ff5a5f', marginLeft: 2 }}>{property?.planSize || '-'}<span style={{ fontWeight: 400, color: '#ff5a5f', marginLeft: 2 }}>{property?.planSize ? 'Sqft' : ''}</span></span></span>
+        <span style={{ marginRight: 10, color: '#222' }}>Rooms:<span style={{ fontWeight: 700, color: '#ff5a5f', marginLeft: 2 }}>{property?.planBedrooms || '-'}<span style={{ fontWeight: 400, color: '#ff5a5f', marginLeft: 2 }}>{property?.planBedrooms ? 'Sqft' : ''}</span></span></span>
+        <span style={{ marginRight: 10, color: '#222' }}>Baths:<span style={{ fontWeight: 700, color: '#ff5a5f', marginLeft: 2 }}>{property?.planBathrooms || '-'}<span style={{ fontWeight: 400, color: '#ff5a5f', marginLeft: 2 }}>{property?.planBathrooms ? 'Sqft' : ''}</span></span></span>
+        <span style={{ marginRight: 10, color: '#222' }}>Price:<span style={{ fontWeight: 700, color: '#ff5a5f', marginLeft: 2 }}>${property?.planPrice || '-'}</span></span>
       </div>
-      <div className="card floor_plan">
-        <div className=" active" id="headingTwo">
-          <h2 className="mb-0">
-            <button
-              className="btn btn-link accordion-button collapsed"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#collapseTwo"
-              aria-expanded="true"
-              aria-controls="collapseTwo"
-            >
-              <ul className="mb0 d-flex align-items-cener flex-wrap">
-                <li className="d-inline-flex list-inline-item">First Floor</li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Size:</p> <span>1267 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Rooms:</p> <span>670 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Baths:</p> <span>530 Sqft</span>
-                </li>
-                <li className="d-inline-flex list-inline-item">
-                  <p>Price:</p> <span>$1489</span>
-                </li>
-              </ul>
-            </button>
-          </h2>
-        </div>
-        <div
-          id="collapseTwo"
-          className="collapse show"
-          aria-labelledby="headingTwo"
-          data-bs-parent="#accordionExample"
-        >
-          <div className="card-body text-center">
-            <Image
-              width={619}
-              height={465}
-              className="img-fluid"
-              src="/assets/images/resource/floor_plan.png"
-              alt="floor_plan.png"
-            />
-            <p>
-              Plan description. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-              laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis
-              nisl ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };

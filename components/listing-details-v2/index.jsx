@@ -7,6 +7,19 @@ import PopupSignInUp from "../common/PopupSignInUp";
 import DetailsContent from "./DetailsContent";
 import Sidebar from "./Sidebar";
 
+const DEMO_PROPERTY = {
+  title: "Luxury Family Home",
+  location: "1421 San Pedro St, Los Angeles, CA 90015",
+  price: 13000,
+  img: "/assets/images/property/1.jpg",
+  imgList2: [
+    "/assets/images/property/2.jpg",
+    "/assets/images/property/3.jpg",
+    "/assets/images/property/4.jpg",
+    "/assets/images/property/5.jpg"
+  ]
+};
+
 const index = () => {
   return (
     <>
@@ -22,7 +35,7 @@ const index = () => {
       {/* <!-- Listing Single Property --> */}
       <section className="single_page_listing_style p0 mt85 md-mt0">
         <div className="container-fluid p0">
-          <ListingGallery2 />
+          <ListingGallery2 property={DEMO_PROPERTY} />
         </div>
       </section>
 
@@ -33,20 +46,21 @@ const index = () => {
             <div className="col-md-12 col-lg-8">
               <div className="listing_single_description2 mt30-767 mb30-767">
                 <div className="single_property_title">
-                  <h2>Luxury Family Home</h2>
-                  <p>1421 San Pedro St, Los Angeles, CA 90015</p>
+                  <h2>{DEMO_PROPERTY.title}</h2>
+                  <p>{DEMO_PROPERTY.location}</p>
                 </div>
                 <div className="single_property_social_share style2 static-title">
                   <div className="price">
                     <h2>
-                      $13,000<small>/mo</small>
+                      ${DEMO_PROPERTY.price}
+                      <small>/mo</small>
                     </h2>
                   </div>
                 </div>
               </div>
               {/* End .listing_single_description2 */}
 
-              <DetailsContent />
+              <DetailsContent property={DEMO_PROPERTY} />
             </div>
             {/* End details content .col-lg-8 */}
 

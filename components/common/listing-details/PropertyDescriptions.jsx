@@ -1,65 +1,69 @@
 'use client'
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
-const PropertyDescriptions = () => {
-  const [click, setClick] = useState(true);
-  const handleClick = () => setClick(!click);
+const MAX_HEIGHT = 120; // px, adjust for about 3-4 lines
+
+const PropertyDescriptions = ({ property }) => {
+  const [expanded, setExpanded] = useState(false);
+  const desc = property?.propertyDescription || "";
+  const contentRef = useRef(null);
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    // Only show button if content is taller than MAX_HEIGHT
+    if (contentRef.current) {
+      setShowButton(contentRef.current.scrollHeight > MAX_HEIGHT);
+    }
+  }, [desc]);
 
   return (
     <>
-      <p className="mb25">
-        Evans Tower very high demand corner junior one bedroom plus a large
-        balcony boasting full open NYC views. You need to see the views to
-        believe them. Mint condition with new hardwood floors. Lots of closets
-        plus washer and dryer.
-      </p>
-      <p className={click ? "gpara second_para white_goverlay mt10 mb10" : ""}>
-        Fully furnished. Elegantly appointed condominium unit situated on
-        premier location. PS6. The wide entry hall leads to a large living room
-        with dining area. This expansive 2 bedroom and 2 renovated marble
-        bathroom apartment has great windows. Despite the interior views, the
-        apartments Southern and Eastern exposures allow for lovely natural light
-        to fill every room. The master suite is surrounded by handcrafted
-        milkwork and features incredible walk-in closet and storage space.
-      </p>
-      <div className="collapse" id="collapseExample">
-        <div className="card card-body">
-          <p className="mt10 mb10">
-            Fully furnished. Elegantly appointed condominium unit situated on
-            premier location. PS6. The wide entry hall leads to a large living
-            room with dining area. This expansive 2 bedroom and 2 renovated
-            marble bathroom apartment has great windows. Despite the interior
-            views, the apartments Southern and Eastern exposures allow for
-            lovely natural light to fill every room. The master suite is
-            surrounded by handcrafted milkwork and features incredible walk-in
-            closet and storage space.
-          </p>
-          <p className="mt10 mb10">
-            Fully furnished. Elegantly appointed condominium unit situated on
-            premier location. PS6. The wide entry hall leads to a large living
-            room with dining area. This expansive 2 bedroom and 2 renovated
-            marble bathroom apartment has great windows. Despite the interior
-            views, the apartments Southern and Eastern exposures allow for
-            lovely natural light to fill every room. The master suite is
-            surrounded by handcrafted milkwork and features incredible walk-in
-            closet and storage space.
-          </p>
-        </div>
-      </div>
-      <p className="overlay_close">
-        <a
-          className="text-thm fz14"
-          data-bs-toggle="collapse"
-          href="#collapseExample"
-          role="button"
-          aria-expanded="false"
-          aria-controls="collapseExample"
-          onClick={handleClick}
+      <div
+        style={{
+          position: "relative",
+          maxHeight: expanded ? "none" : `${MAX_HEIGHT}px`,
+          overflow: expanded ? "visible" : "hidden",
+          transition: "max-height 0.3s",
+        }}
+        ref={contentRef}
+      >
+        <p
+          className="mb25"
+          style={{
+            wordBreak: "break-word",
+            whiteSpace: "pre-line",
+            marginBottom: 0,
+          }}
         >
-          Show More <span className="flaticon-download-1 fz12"></span>
-        </a>
-      </p>
+          {desc}
+        </p>
+        {!expanded && showButton && (
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: "2.5em",
+              background: "linear-gradient(to bottom, rgba(255,255,255,0) 0%, #fff 90%)",
+              pointerEvents: "none",
+            }}
+          />
+        )}
+      </div>
+      {showButton && (
+        <p className="overlay_close" style={{ marginTop: 0 }}>
+          <a
+            className="text-thm fz14"
+            style={{ cursor: "pointer", color: "#ff5a5f" }}
+            onClick={() => setExpanded((e) => !e)}
+          >
+            {expanded ? "Show Less" : "Show More"} {" "}
+            <span className="flaticon-download-1 fz12"></span>
+          </a>
+        </p>
+      )}
     </>
   );
 };

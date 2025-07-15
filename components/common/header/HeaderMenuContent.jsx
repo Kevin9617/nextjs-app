@@ -388,63 +388,63 @@ const HeaderMenuContent = ({ float = "" }) => {
       {/* End .dropitem */}
 
       {userRole === 'admin' && (
-        <li className="dropitem">
-          <a
-            href="#"
-            className={
-              property.some((parent) => {
-                return parent.items.some(
-                  (page) =>
-                    page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
-                    // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
-                );
-              })
-                ? "ui-active"
-                : undefined
-            }
-          >
-            <span className="title">Property</span>{" "}
-            <span className="arrow"></span>
-          </a>
-          <ul className="sub-menu ">
-            {property.map((item) => (
-              <li className="dropitem arrow" key={item.id}>
-                <a
-                  href="#"
-                  className={
-                    item.items.some(
-                      (page) =>
-                        page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
-                        // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
-                    )
-                      ? "ui-active"
-                      : undefined
-                  }
-                >
-                  {item.title}
-                </a>
-                {/* <!-- Level Three--> */}
-                <ul className="sub-menu ">
-                  {item.items.map((val, i) => (
-                    <li key={i}>
-                      <Link
-                        href={val.routerPath}
-                        className={
-                          pathname?.split('/')[1] === val.routerPath?.split('/')[1] 
-                          // val.routerPath + "/[id]" === pathname?.split('/')[1]
-                            ? "ui-active"
-                            : undefined
-                        }
-                      >
-                        {val.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </li>
+      <li className="dropitem">
+        <a
+          href="#"
+          className={
+            property.some((parent) => {
+              return parent.items.some(
+                (page) =>
+                  page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
+                  // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
+              );
+            })
+              ? "ui-active"
+              : undefined
+          }
+        >
+          <span className="title">Property</span>{" "}
+          <span className="arrow"></span>
+        </a>
+        <ul className="sub-menu ">
+          {property.map((item) => (
+            <li className="dropitem arrow" key={item.id}>
+              <a
+                href="#"
+                className={
+                  item.items.some(
+                    (page) =>
+                      page.routerPath?.split('/')[1] === pathname?.split('/')[1] 
+                      // page.routerPath?.split('/')[1] + "/[id]" === pathname?.split('/')[1]
+                  )
+                    ? "ui-active"
+                    : undefined
+                }
+              >
+                {item.title}
+              </a>
+              {/* <!-- Level Three--> */}
+              <ul className="sub-menu ">
+                {item.items.map((val, i) => (
+                  <li key={i}>
+                    <Link
+                      href={val.routerPath}
+                      className={
+                        pathname?.split('/')[1] === val.routerPath?.split('/')[1] 
+                        // val.routerPath + "/[id]" === pathname?.split('/')[1]
+                          ? "ui-active"
+                          : undefined
+                      }
+                    >
+                      {val.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </li>
       )}
       {/* End .dropitem */}
 
@@ -540,37 +540,37 @@ const HeaderMenuContent = ({ float = "" }) => {
       ) : (
         <li className="user_setting">
           <div className="dropdown">
-          <a
-            className="btn dropdown-toggle"
-            href="#"
-            onClick={() => setShowDropdown(!showDropdown)}
+            <a
+              className="btn dropdown-toggle"
+              href="#"
+              onClick={() => setShowDropdown(!showDropdown)}
             style={{ display: 'flex', alignItems: 'center', gap: 12 }}
-          >
-            <Image
-              width={45}
-              height={45}
-              className="rounded-circle"
-              src="/assets/images/team/e1.png"
-              alt="e1.png"
-            />
+            >
+              <Image
+                width={45}
+                height={45}
+                className="rounded-circle"
+                src="/assets/images/team/e1.png"
+                alt="e1.png"
+              />
             <span style={{ color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               {userName && <span>{userName}</span>}
               {userEmail && <span style={{ fontSize: '0.9em', opacity: 0.8 }}>{userEmail}</span>}
             </span>
-          </a>
+            </a>
             {showDropdown && (
               <div className="dropdown-menu show">
                 <MyAccount onLogout={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("name");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("name");
                   localStorage.removeItem("email");
                   localStorage.removeItem("userRole");
                   setUserName("");
                   setUserEmail("");
                   setUserRole("");
                   setIsLoggedIn(false);
-                  window.dispatchEvent(new Event("logout"));
-                  setShowDropdown(false);
+                    window.dispatchEvent(new Event("logout"));
+                    setShowDropdown(false);
                   window.location.href = "/";
                 }} />
               </div>
@@ -581,12 +581,12 @@ const HeaderMenuContent = ({ float = "" }) => {
       {/* End .dropitem */}
 
       {userRole === 'admin' && (
-        <li className={`list-inline-item add_listing ${float}`}>
-          <Link href="/create-listing">
-            <span className="flaticon-plus"></span>
-            <span className="dn-lg"> Create Listing</span>
-          </Link>
-        </li>
+      <li className={`list-inline-item add_listing ${float}`}>
+        <Link href="/create-listing">
+          <span className="flaticon-plus"></span>
+          <span className="dn-lg"> Create Listing</span>
+        </Link>
+      </li>
       )}
       {/* End .dropitem */}
     </ul>
