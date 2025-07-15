@@ -6,15 +6,17 @@ import Image from "next/image";
 
 const DEMO_IMG = "/assets/images/property/default.jpg";
 
+const getImageUrl = (filename) => filename ? `/api/image?filename=${filename}` : DEMO_IMG;
+
 const ListingGallery2 = ({ property }) => {
-  // Collect up to 5 images
+  // Collect up to 5 images (filenames only)
   const images = [
-    property?.media_image1 ? `/uploads/${property.media_image1}` : null,
-    property?.media_image2 ? `/uploads/${property.media_image2}` : null,
-    property?.media_image3 ? `/uploads/${property.media_image3}` : null,
-    property?.media_image4 ? `/uploads/${property.media_image4}` : null,
-    property?.media_image5 ? `/uploads/${property.media_image5}` : null,
-  ].map(img => img || DEMO_IMG);
+    property?.media_image1,
+    property?.media_image2,
+    property?.media_image3,
+    property?.media_image4,
+    property?.media_image5,
+  ];
 
   return (
     <Gallery>
@@ -22,8 +24,8 @@ const ListingGallery2 = ({ property }) => {
         {/* Left: First image large */}
         <div style={{ flex: 2 }}>
           <Item
-            original={images[0]}
-            thumbnail={images[0]}
+            original={getImageUrl(images[0])}
+            thumbnail={getImageUrl(images[0])}
             width={752}
             height={450}
           >
@@ -33,7 +35,7 @@ const ListingGallery2 = ({ property }) => {
                   width={600}
                   height={400}
                   className="img-fluid w100"
-                  src={images[0]}
+                  src={getImageUrl(images[0])}
                   alt="property-image-1"
                   style={{ width: '100%', height: 400, objectFit: 'cover', borderRadius: 8 }}
                 />
@@ -43,11 +45,11 @@ const ListingGallery2 = ({ property }) => {
         </div>
         {/* Right: 2x2 grid for next 4 images */}
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: '1fr 1fr', gap: 8 }}>
-          {images.slice(1, 5).map((img, idx) => (
+          {images.slice(1, 5).map((filename, idx) => (
             <Item
               key={idx}
-              original={img}
-              thumbnail={img}
+              original={getImageUrl(filename)}
+              thumbnail={getImageUrl(filename)}
               width={376}
               height={195}
             >
@@ -57,7 +59,7 @@ const ListingGallery2 = ({ property }) => {
                     width={300}
                     height={195}
                     className="img-fluid w100"
-                    src={img}
+                    src={getImageUrl(filename)}
                     alt={`property-image-${idx + 2}`}
                     style={{ width: '100%', height: 195, objectFit: 'cover', borderRadius: 8 }}
                   />

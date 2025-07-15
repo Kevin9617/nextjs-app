@@ -5,7 +5,7 @@ const PropertyDetails = ({ property }) => {
         <ul className="list-inline-item">
           <li>
             <p>
-              Property ID : <span>{property?.id ?? '-'}</span>
+              Property ID : <span>{property?.propertyId ?? '-'}</span>
             </p>
           </li>
           <li>
@@ -15,12 +15,12 @@ const PropertyDetails = ({ property }) => {
           </li>
           <li>
             <p>
-              Property Size : <span>{property?.size ?? '-'} Sq Ft</span>
+              Property Size : <span>{property?.areaSize ?? '-'} Sq Ft</span>
             </p>
           </li>
           <li>
             <p>
-              Year Built : <span>{property?.year_built ?? '-'}</span>
+              Year Built : <span>{property?.yearBuilt ?? '-'}</span>
             </p>
           </li>
         </ul>
@@ -31,22 +31,22 @@ const PropertyDetails = ({ property }) => {
         <ul className="list-inline-item">
           <li>
             <p>
-              Bedrooms : <span>{property?.beds ?? '-'}</span>
+              Bedrooms : <span>{property?.bedrooms ?? '-'}</span>
             </p>
           </li>
           <li>
             <p>
-              Bathrooms : <span>{property?.baths ?? '-'}</span>
+              Bathrooms : <span>{property?.bathrooms ?? '-'}</span>
             </p>
           </li>
           <li>
             <p>
-              Garage : <span>{property?.garage ?? '-'}</span>
+              Garage : <span>{property?.garages ?? '-'}</span>
             </p>
           </li>
           <li>
             <p>
-              Garage Size : <span>{property?.garage_size ?? '-'} SqFt</span>
+              Garage Size : <span>{property?.garagesSize ?? '-'} SqFt</span>
             </p>
           </li>
         </ul>

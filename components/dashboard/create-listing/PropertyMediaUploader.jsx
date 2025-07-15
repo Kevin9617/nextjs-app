@@ -94,7 +94,7 @@ const PropertyMediaUploader = ({ form, setForm, maxImages = 5 }) => {
                       width={200}
                       height={200}
                       className="img-fluid cover"
-                      src={item.filename ? `/uploads/${item.filename}` : URL.createObjectURL(item.file)}
+                      src={item.filename ? `/api/image?filename=${item.filename}` : URL.createObjectURL(item.file)}
                       alt="fp1.jpg"
                     />
                     <div

@@ -8,7 +8,8 @@ export const config = {
   },
 };
 
-const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+// Save uploads to /uploads at the project root
+const uploadsDir = path.join(process.cwd(), 'uploads');
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {

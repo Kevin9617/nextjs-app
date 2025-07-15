@@ -61,7 +61,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
               width={150}
               height={220}
               className="img-whp cover"
-              src={item.media_image1 ? `/uploads/${item.media_image1}` : "/assets/images/property/default.jpg"}
+              src={item.media_image1 ? `/api/image?filename=${item.media_image1}` : "/assets/images/property/default.jpg"}
               alt={item.title || "property"}
             />
             <div className="thmb_cntnt">
