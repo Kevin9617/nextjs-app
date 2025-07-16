@@ -4,6 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
+function validatePasswordStrength(password) {
+  // At least 8 chars, one uppercase, one lowercase, one number, one special char
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+  return regex.test(password);
+}
+
 const LoginSignup = () => {
   // Registration state
   const [regUsername, setRegUsername] = useState("");
@@ -25,6 +31,10 @@ const LoginSignup = () => {
     setRegMsg("");
     if (regPassword !== regRePassword) {
       setRegMsg("Passwords do not match");
+      return;
+    }
+    if (!validatePasswordStrength(regPassword)) {
+      setRegMsg('Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
       return;
     }
     setRegLoading(true);

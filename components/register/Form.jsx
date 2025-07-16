@@ -2,6 +2,12 @@
 import Link from "next/link";
 import { useState } from "react";
 
+function validatePasswordStrength(password) {
+  // At least 8 chars, one uppercase, one lowercase, one number, one special char
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/;
+  return regex.test(password);
+}
+
 const Form = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -16,6 +22,10 @@ const Form = () => {
     setMessage("");
     if (password !== confirmPassword) {
       setMessage("Passwords do not match");
+      return;
+    }
+    if (!validatePasswordStrength(password)) {
+      setMessage('Password must be at least 8 characters and include uppercase, lowercase, number, and special character.');
       return;
     }
     setLoading(true);
