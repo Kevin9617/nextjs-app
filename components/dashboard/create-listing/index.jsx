@@ -105,10 +105,20 @@ const index = () => {
     setLoading(true);
     setMessage("");
     try {
+      // Get user email from /api/me
+      let email = '';
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+      if (token) {
+        const resMe = await fetch('/api/me', { headers: { Authorization: `Bearer ${token}` } });
+        if (resMe.ok) {
+          const user = await resMe.json();
+          email = user.email;
+        }
+      }
       const res = await fetch("/api/create-listing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, floorPlans }),
+        body: JSON.stringify({ ...form, floorPlans, email }),
       });
       const data = await res.json();
       if (data.success) {

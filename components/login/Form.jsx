@@ -26,12 +26,6 @@ const Form = () => {
       const data = await res.json();
       if (res.ok && data.token) {
         localStorage.setItem("token", data.token);
-        try {
-          const decoded = jwt_decode(data.token);
-          if (decoded.email) {
-            localStorage.setItem("email", decoded.email);
-          }
-        } catch (e) {}
         window.dispatchEvent(new Event("login"));
         window.location.href = "/";
       } else {

@@ -1,5 +1,6 @@
 import mysql from 'mysql2/promise';
 import pool from '../../../lib/db';
+import nodemailer from 'nodemailer';
 
 function emptyToNull(val) {
   return val === "" ? null : val;
@@ -15,24 +16,25 @@ export async function POST(req) {
       bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
       media_image1, media_image2, media_image3, media_image4, media_image5,
       attachment1, attachment2,
-      floorPlans // <-- array of floor plan objects
+      floorPlans,
+      email // <-- user email
     } = body;
 
-    // Insert property (no floor plan fields)
+    // Insert property (now includes email)
     const result = await pool.query(
       `INSERT INTO houseProperty (
         propertyTitle, propertyDescription, type, status, price, area, rooms,
         address, state, city, neighborhood, zip, country,
         propertyId, areaSize, sizePrefix, landArea, landAreaSizePostfix,
         bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
-        media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2, email
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         emptyToNull(propertyTitle), emptyToNull(propertyDescription), emptyToNull(type), emptyToNull(status), emptyToNull(price), emptyToNull(area), emptyToNull(rooms),
         emptyToNull(address), emptyToNull(state), emptyToNull(city), emptyToNull(neighborhood), emptyToNull(zip), emptyToNull(country),
         emptyToNull(propertyId), emptyToNull(areaSize), emptyToNull(sizePrefix), emptyToNull(landArea), emptyToNull(landAreaSizePostfix),
         emptyToNull(bedrooms), emptyToNull(bathrooms), emptyToNull(garages), emptyToNull(garagesSize), emptyToNull(yearBuilt), emptyToNull(videoUrl), emptyToNull(virtualTour),
-        emptyToNull(media_image1), emptyToNull(media_image2), emptyToNull(media_image3), emptyToNull(media_image4), emptyToNull(media_image5), emptyToNull(attachment1), emptyToNull(attachment2)
+        emptyToNull(media_image1), emptyToNull(media_image2), emptyToNull(media_image3), emptyToNull(media_image4), emptyToNull(media_image5), emptyToNull(attachment1), emptyToNull(attachment2), emptyToNull(email)
       ]
     );
     const houseId = Number(result.insertId);
@@ -58,6 +60,30 @@ export async function POST(req) {
         );
       }
     }
+
+    // Send email with listing data
+    try {
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.example.com', // Replace with your SMTP server
+        port: 587,
+        secure: false,
+        auth: {
+          user: 'your@email.com', // Replace with your SMTP user
+          pass: 'yourpassword',   // Replace with your SMTP password
+        },
+      });
+      await transporter.sendMail({
+        from: 'no-reply@findhouse.com',
+        to: email,
+        subject: 'Your property listing was created',
+        text: `Thank you for creating a property listing!\n\nTitle: ${propertyTitle}\nDescription: ${propertyDescription}\nPrice: ${price}\nLocation: ${address}, ${city}, ${state}, ${zip}`,
+        html: `<h2>Thank you for creating a property listing!</h2><p><b>Title:</b> ${propertyTitle}</p><p><b>Description:</b> ${propertyDescription}</p><p><b>Price:</b> ${price}</p><p><b>Location:</b> ${address}, ${city}, ${state}, ${zip}</p>`
+      });
+    } catch (emailErr) {
+      console.error('Failed to send email:', emailErr);
+      // Do not fail the request if email fails
+    }
+
     return new Response(JSON.stringify({ success: true, id: Number(houseId) }), { status: 201 });
   } catch (err) {
     console.error(err);

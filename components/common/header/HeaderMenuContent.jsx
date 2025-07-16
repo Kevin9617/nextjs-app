@@ -15,54 +15,40 @@ const HeaderMenuContent = ({ float = "" }) => {
   const [userName, setUserName] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      setIsLoggedIn(!!token);
-      setUserRole(localStorage.getItem("userRole") || "");
+    async function fetchUser() {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
       if (token) {
         try {
-          const decoded = jwtDecode(token);
-          setUserName(decoded.username || "");
-          setUserEmail(decoded.email || "");
-        } catch (e) {
-          setUserName("");
-          setUserEmail("");
-        }
-      } else {
-        setUserName("");
-        setUserEmail("");
-      }
-      const handleLogin = () => {
-        const token = localStorage.getItem("token");
-        setIsLoggedIn(!!token);
-        setUserRole(localStorage.getItem("userRole") || "");
-        if (token) {
-          try {
-            const decoded = jwtDecode(token);
-            setUserName(decoded.username || "");
-            setUserEmail(decoded.email || "");
-          } catch (e) {
-            setUserName("");
-            setUserEmail("");
+          const res = await fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } });
+          if (res.ok) {
+            const user = await res.json();
+            setUserName(user.username || "");
+            setUserEmail(user.email || "");
+            setUserRole(user.role || "");
+            setIsLoggedIn(true);
+            return;
           }
-        } else {
-          setUserName("");
-          setUserEmail("");
-        }
-      };
-      const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUserRole("");
-        setUserName("");
-        setUserEmail("");
-      };
-      window.addEventListener("login", handleLogin);
-      window.addEventListener("logout", handleLogout);
-      return () => {
-        window.removeEventListener("login", handleLogin);
-        window.removeEventListener("logout", handleLogout);
-      };
+        } catch {}
+      }
+      setUserName("");
+      setUserEmail("");
+      setUserRole("");
+      setIsLoggedIn(false);
     }
+    fetchUser();
+    const handleLogin = fetchUser;
+    const handleLogout = () => {
+      setIsLoggedIn(false);
+      setUserRole("");
+      setUserName("");
+      setUserEmail("");
+    };
+    window.addEventListener("login", handleLogin);
+    window.addEventListener("logout", handleLogout);
+    return () => {
+      window.removeEventListener("login", handleLogin);
+      window.removeEventListener("logout", handleLogout);
+    };
   }, []);
 
   const home = [
@@ -562,9 +548,6 @@ const HeaderMenuContent = ({ float = "" }) => {
               <div className="dropdown-menu show">
                 <MyAccount onLogout={() => {
                     localStorage.removeItem("token");
-                    localStorage.removeItem("name");
-                  localStorage.removeItem("email");
-                  localStorage.removeItem("userRole");
                   setUserName("");
                   setUserEmail("");
                   setUserRole("");

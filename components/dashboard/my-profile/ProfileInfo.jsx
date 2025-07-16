@@ -9,19 +9,23 @@ const ProfileInfo = () => {
     const [userEmail, setUserEmail] = useState("");
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            const token = localStorage.getItem("token");
+        async function fetchUser() {
+            const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
             if (token) {
                 try {
-                    const decoded = jwtDecode(token);
-                    setUserName(decoded.username || "");
-                    setUserEmail(decoded.email || "");
-                } catch (e) {
-                    setUserName("");
-                    setUserEmail("");
-                }
+                    const res = await fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } });
+                    if (res.ok) {
+                        const user = await res.json();
+                        setUserName(user.username || "");
+                        setUserEmail(user.email || "");
+                        return;
+                    }
+                } catch {}
             }
+            setUserName("");
+            setUserEmail("");
         }
+        fetchUser();
     }, []);
 
     // upload profile

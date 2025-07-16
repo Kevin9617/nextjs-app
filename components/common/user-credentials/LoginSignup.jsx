@@ -72,31 +72,6 @@ const LoginSignup = () => {
       });
       const data = await res.json();
       if (res.ok && data.token) {
-        console.log("Token received:", data.token);
-        let emailToSave = '';
-        try {
-          const decoded = jwtDecode(data.token);
-          console.log("Decoded JWT:", decoded);
-          if (decoded.email) {
-            emailToSave = decoded.email;
-          }
-          if (decoded.username) {
-            localStorage.setItem("username", decoded.username);
-          }
-          // Save user role
-          if (decoded.role) {
-            localStorage.setItem("userRole", decoded.role);
-          }
-        } catch (e) {
-          console.error("JWT decode error:", e);
-        }
-        // Fallback: if no email in JWT, use the login form value if it looks like an email
-        if (!emailToSave && loginUsernameOrEmail.includes("@")) {
-          emailToSave = loginUsernameOrEmail;
-        }
-        if (emailToSave) {
-          localStorage.setItem("email", emailToSave);
-        }
         localStorage.setItem("token", data.token);
         window.dispatchEvent(new Event("login"));
         window.location.href = "/";

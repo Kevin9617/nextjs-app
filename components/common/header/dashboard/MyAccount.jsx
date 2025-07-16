@@ -11,17 +11,29 @@ const MyAccount = ({ onLogout }) => {
   const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setUserEmail(localStorage.getItem("email") || "");
-      const handleLogin = () => setUserEmail(localStorage.getItem("email") || "");
-      const handleLogout = () => setUserEmail("");
-      window.addEventListener("login", handleLogin);
-      window.addEventListener("logout", handleLogout);
-      return () => {
-        window.removeEventListener("login", handleLogin);
-        window.removeEventListener("logout", handleLogout);
-      };
+    async function fetchUser() {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      if (token) {
+        try {
+          const res = await fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } });
+          if (res.ok) {
+            const user = await res.json();
+            setUserEmail(user.email || "");
+            return;
+          }
+        } catch {}
+      }
+      setUserEmail("");
     }
+    fetchUser();
+    const handleLogin = fetchUser;
+    const handleLogout = () => setUserEmail("");
+    window.addEventListener("login", handleLogin);
+    window.addEventListener("logout", handleLogout);
+    return () => {
+      window.removeEventListener("login", handleLogin);
+      window.removeEventListener("logout", handleLogout);
+    };
   }, []);
 
   const profileMenuItems = [
