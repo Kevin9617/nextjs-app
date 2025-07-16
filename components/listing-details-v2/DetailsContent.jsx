@@ -29,7 +29,11 @@ const DetailsContent = ({ property }) => {
         <h4 className="mb30">
           Location{" "}
           <small className="float-end">
-            {property?.location}
+            {property?.address ? property.address : ''}
+            {property?.city ? `, ${property.city}` : ''}
+            {property?.state ? `, ${property.state}` : ''}
+            {property?.zip ? ` ${property.zip}` : ''}
+            {!(property?.address || property?.city || property?.state || property?.zip) ? '-' : ''}
           </small>
         </h4>
         <div className="property_video p0">

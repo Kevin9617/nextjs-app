@@ -9,6 +9,17 @@ import FloorPlans from "./FloorPlans";
 import LocationField from "./LocationField";
 import PropertyMediaUploader from "./PropertyMediaUploader";
 
+const initialPlan = {
+  planTitle: "",
+  planBedrooms: "",
+  planBathrooms: "",
+  planPrice: "",
+  pricePostfix: "",
+  planSize: "",
+  planImage: "",
+  planDescription: "",
+};
+
 const initialForm = {
   propertyTitle: "",
   propertyDescription: "",
@@ -54,6 +65,7 @@ const initialForm = {
 
 const index = () => {
   const [form, setForm] = useState(initialForm);
+  const [floorPlans, setFloorPlans] = useState([ { ...initialPlan } ]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -67,6 +79,28 @@ const index = () => {
     setForm((prev) => ({ ...prev, [id]: value }));
   };
 
+  const handlePlanChange = (idx, e) => {
+    const { id, value } = e.target;
+    setFloorPlans((prev) => {
+      const updated = [...prev];
+      updated[idx][id] = value;
+      return updated;
+    });
+  };
+
+  const handlePlanImageChange = (idx, filename, originalName) => {
+    setFloorPlans((prev) => {
+      const updated = [...prev];
+      updated[idx].planImage = filename;
+      updated[idx].planImageOriginal = originalName;
+      return updated;
+    });
+  };
+
+  const addMorePlan = () => {
+    setFloorPlans((prev) => [...prev, { ...initialPlan }]);
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
     setMessage("");
@@ -74,12 +108,13 @@ const index = () => {
       const res = await fetch("/api/create-listing", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, floorPlans }),
       });
       const data = await res.json();
       if (data.success) {
         setMessage("Listing created successfully!");
         setForm(initialForm);
+        setFloorPlans([ { ...initialPlan } ]);
       } else {
         setMessage(data.error || "Error creating listing");
       }
@@ -282,7 +317,7 @@ const index = () => {
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="areaSize">Area Size</label>
-                          <input type="text" className="form-control" id="areaSize" value={form.areaSize} onChange={handleChange} />
+                          <input type="number" className="form-control" id="areaSize" value={form.areaSize} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
@@ -306,31 +341,31 @@ const index = () => {
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="bedrooms">Bedrooms</label>
-                          <input type="text" className="form-control" id="bedrooms" value={form.bedrooms} onChange={handleChange} />
+                          <input type="number" className="form-control" id="bedrooms" value={form.bedrooms} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="bathrooms">Bathrooms</label>
-                          <input type="text" className="form-control" id="bathrooms" value={form.bathrooms} onChange={handleChange} />
+                          <input type="number" className="form-control" id="bathrooms" value={form.bathrooms} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="garages">Garages</label>
-                          <input type="text" className="form-control" id="garages" value={form.garages} onChange={handleChange} />
+                          <input type="number" className="form-control" id="garages" value={form.garages} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="garagesSize">Garages Size</label>
-                          <input type="text" className="form-control" id="garagesSize" value={form.garagesSize} onChange={handleChange} />
+                          <input type="number" className="form-control" id="garagesSize" value={form.garagesSize} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="yearBuilt">Year Built</label>
-                          <input type="text" className="form-control" id="yearBuilt" value={form.yearBuilt} onChange={handleChange} />
+                          <input type="date" className="form-control" id="yearBuilt" value={form.yearBuilt} onChange={handleChange} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-xl-4">
@@ -357,10 +392,33 @@ const index = () => {
                   <div className="my_dashboard_review mt30">
                     <div className="col-lg-12">
                       <h3 className="mb30">Floor Plans</h3>
-                      <button className="btn admore_btn mb30">Add More</button>
+                      <button type="button" className="btn admore_btn mb30" onClick={addMorePlan}>Add More</button>
                     </div>
-
-                    <FloorPlans form={form} setForm={setForm} />
+                    {floorPlans.map((plan, idx) => (
+                      <div key={idx}>
+                        <FloorPlans
+                          form={plan}
+                          setForm={(updatedPlan) => {
+                            setFloorPlans((prev) => {
+                              const arr = [...prev];
+                              arr[idx] = { ...arr[idx], ...updatedPlan };
+                              return arr;
+                            });
+                          }}
+                          onImageChange={(filename, originalName) => handlePlanImageChange(idx, filename, originalName)}
+                        />
+                        <div style={{textAlign: 'right', marginBottom: 24}}>
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => setFloorPlans(prev => prev.filter((_, i) => i !== idx))}
+                            disabled={floorPlans.length === 1}
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                   {/* Send Button */}
                   <div className="my_dashboard_review mt30">

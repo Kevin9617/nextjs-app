@@ -21,6 +21,11 @@ export async function GET(request, { params }) {
       return new Response(JSON.stringify({ error: 'Property not found' }), { status: 404 });
     }
     const property = rows[0];
+
+    // Fetch floor plans for this property
+    const floorPlansRows = await conn.query('SELECT * FROM floorPlans WHERE house_id = ?', [numericId]);
+    property.floorPlans = floorPlansRows;
+
     return new Response(JSON.stringify(property), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },

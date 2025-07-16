@@ -15,7 +15,7 @@ const PropertyDetails = ({ property }) => {
           </li>
           <li>
             <p>
-              Property Size : <span>{property?.areaSize ?? '-'} Sq Ft</span>
+              Property Size : <span>{property?.areaSize ? property.areaSize : '-'}{property?.sizePrefix ? ` ${property.sizePrefix}` : ''}</span>
             </p>
           </li>
           <li>
@@ -46,7 +46,7 @@ const PropertyDetails = ({ property }) => {
           </li>
           <li>
             <p>
-              Garage Size : <span>{property?.garagesSize ?? '-'} SqFt</span>
+              Garage Size : <span>{property?.garagesSize ? property.garagesSize : '-'}{property?.sizePrefix ? ` ${property.sizePrefix}` : ''}</span>
             </p>
           </li>
         </ul>
