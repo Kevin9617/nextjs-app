@@ -6,11 +6,33 @@ import TableData from "./TableData";
 import Filtering from "./Filtering";
 import Pagination from "./Pagination";
 import SearchBox from "./SearchBox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const PAGE_SIZE = 10;
 
 const Index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    async function checkRole() {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      if (!token) {
+        router.replace("/");
+        return;
+      }
+      const res = await fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) {
+        router.replace("/");
+        return;
+      }
+      const user = await res.json();
+      if (user.role !== "admin") {
+        router.replace("/");
+      }
+    }
+    checkRole();
+  }, [router]);
+
   const [search, setSearch] = useState(""); // actual search term for API
   const [inputValue, setInputValue] = useState(""); // input field value
   const [filter, setFilter] = useState("");

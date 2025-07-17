@@ -1,3 +1,6 @@
+'use client'
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
@@ -5,6 +8,26 @@ import SearchData from "../my-saved-search/SearchData";
 import SearchBox from "./SearchBox";
 
 const index = () => {
+  const router = useRouter();
+  useEffect(() => {
+    async function checkRole() {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      if (!token) {
+        router.replace("/");
+        return;
+      }
+      const res = await fetch("/api/me", { headers: { Authorization: `Bearer ${token}` } });
+      if (!res.ok) {
+        router.replace("/");
+        return;
+      }
+      const user = await res.json();
+      if (user.role !== "admin") {
+        router.replace("/");
+      }
+    }
+    checkRole();
+  }, [router]);
   return (
     <>
       {/* <!-- Main Header Nav --> */}
