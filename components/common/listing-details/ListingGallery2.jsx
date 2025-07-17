@@ -50,8 +50,8 @@ const ListingGallery2 = ({ property }) => {
               key={idx}
               original={getImageUrl(filename)}
               thumbnail={getImageUrl(filename)}
-              width={376}
-              height={195}
+              width={752} // changed from 376 to 752
+              height={450} // changed from 195 to 450
             >
               {({ ref, open }) => (
                 <div role="button" ref={ref} onClick={open}>
