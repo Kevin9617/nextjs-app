@@ -15,6 +15,7 @@ const SidebarMenu = () => {
   const pathname = usePathname();
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userRole, setUserRole] = useState("");
 
   useEffect(() => {
     async function fetchUser() {
@@ -26,18 +27,21 @@ const SidebarMenu = () => {
             const user = await res.json();
             setUserName(user.username || "");
             setUserEmail(user.email || "");
+            setUserRole(user.role || "");
             return;
           }
         } catch {}
       }
       setUserName("");
       setUserEmail("");
+      setUserRole("");
     }
     fetchUser();
     const handleLogin = fetchUser;
     const handleLogout = () => {
       setUserName("");
       setUserEmail("");
+      setUserRole("");
     };
     window.addEventListener("login", handleLogin);
     window.addEventListener("logout", handleLogout);
@@ -117,18 +121,20 @@ const SidebarMenu = () => {
                 <span> Dashboard</span>
               </Link>
             </li>
-            <li
-              className={`treeview ${
-                isSinglePageActive("/create-listing", pathname)
-                  ? "active"
-                  : ""
-              }`}
-            >
-              <Link href="/create-listing">
-                <i className="flaticon-plus"></i>
-                <span> Create Listing</span>
-              </Link>
-            </li>
+            {userRole === 'admin' && (
+              <li
+                className={`treeview ${
+                  isSinglePageActive("/create-listing", pathname)
+                    ? "active"
+                    : ""
+                }`}
+              >
+                <Link href="/create-listing">
+                  <i className="flaticon-plus"></i>
+                  <span> Create Listing</span>
+                </Link>
+              </li>
+            )}
             <li
               className={`treeview ${
                 isSinglePageActive("/my-message", pathname)
@@ -145,6 +151,7 @@ const SidebarMenu = () => {
         </li>
         {/* End Main */}
 
+        {userRole === 'admin' && (
         <li className="title">
           <span>Manage Listings</span>
           <ul>
@@ -217,6 +224,7 @@ const SidebarMenu = () => {
             </li>
           </ul>
         </li>
+        )}
         {/* End manage listing */}
 
         <li className="title">

@@ -5,8 +5,23 @@ import { jwtDecode } from "jwt-decode";
 
 const ProfileInfo = () => {
     const [profile, setProfile] = useState(null);
+    const [profileImage, setProfileImage] = useState("");
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [position, setPosition] = useState("");
+    const [license, setLicense] = useState("");
+    const [taxNumber, setTaxNumber] = useState("");
+    const [phone, setPhone] = useState("");
+    const [faxNumber, setFaxNumber] = useState("");
+    const [mobile, setMobile] = useState("");
+    const [language, setLanguage] = useState("");
+    const [companyName, setCompanyName] = useState("");
+    const [address, setAddress] = useState("");
+    const [aboutMe, setAboutMe] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
 
     useEffect(() => {
         async function fetchUser() {
@@ -18,6 +33,19 @@ const ProfileInfo = () => {
                         const user = await res.json();
                         setUserName(user.username || "");
                         setUserEmail(user.email || "");
+                        setFirstName(user.first_name || "");
+                        setLastName(user.last_name || "");
+                        setPosition(user.position || "");
+                        setLicense(user.license || "");
+                        setTaxNumber(user.tax_number || "");
+                        setPhone(user.phone || "");
+                        setFaxNumber(user.fax_number || "");
+                        setMobile(user.mobile || "");
+                        setLanguage(user.language || "");
+                        setCompanyName(user.company_name || "");
+                        setAddress(user.address || "");
+                        setAboutMe(user.about_me || "");
+                        setProfileImage(user.profile_image || "");
                         return;
                     }
                 } catch {}
@@ -29,8 +57,71 @@ const ProfileInfo = () => {
     }, []);
 
     // upload profile
-    const uploadProfile = (e) => {
-        setProfile(e.target.files[0]);
+    const uploadProfile = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        
+        setProfile(file);
+        setLoading(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            const data = await res.json();
+            if (data.filename) {
+                setProfileImage(data.filename);
+            }
+        } catch (err) {
+            setMessage("Failed to upload image");
+        }
+        setLoading(false);
+    };
+
+    const handleUpdateProfile = async () => {
+        setLoading(true);
+        setMessage("");
+        try {
+            const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+            if (!token) {
+                setMessage("Not authenticated");
+                return;
+            }
+            const res = await fetch("/api/update-profile", {
+                method: "POST",
+                headers: { 
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    position,
+                    license,
+                    taxNumber,
+                    phone,
+                    faxNumber,
+                    mobile,
+                    language,
+                    companyName,
+                    address,
+                    aboutMe,
+                    profileImage
+                }),
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+                setMessage("Profile updated successfully!");
+                setProfile(null); // Clear the file input
+            } else {
+                setMessage(data.error || "Failed to update profile");
+            }
+        } catch (err) {
+            setMessage("Network error");
+        }
+        setLoading(false);
     };
 
     return (
@@ -47,9 +138,11 @@ const ProfileInfo = () => {
                         style={
                             profile !== null
                                 ? {
-                                      backgroundImage: `url(${URL.createObjectURL(
-                                          profile
-                                      )})`,
+                                      backgroundImage: `url(${URL.createObjectURL(profile)})`,
+                                  }
+                                : profileImage
+                                ? {
+                                      backgroundImage: `url(/api/image?filename=${profileImage})`,
                                   }
                                 : undefined
                         }
@@ -101,6 +194,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput3"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
                     />
                 </div>
             </div>
@@ -113,6 +208,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput4"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                     />
                 </div>
             </div>
@@ -125,6 +222,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput5"
+                        value={position}
+                        onChange={(e) => setPosition(e.target.value)}
                     />
                 </div>
             </div>
@@ -137,6 +236,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput6"
+                        value={license}
+                        onChange={(e) => setLicense(e.target.value)}
                     />
                 </div>
             </div>
@@ -149,6 +250,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput7"
+                        value={taxNumber}
+                        onChange={(e) => setTaxNumber(e.target.value)}
                     />
                 </div>
             </div>
@@ -161,6 +264,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput8"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
                     />
                 </div>
             </div>
@@ -173,6 +278,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput9"
+                        value={faxNumber}
+                        onChange={(e) => setFaxNumber(e.target.value)}
                     />
                 </div>
             </div>
@@ -185,6 +292,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput10"
+                        value={mobile}
+                        onChange={(e) => setMobile(e.target.value)}
                     />
                 </div>
             </div>
@@ -197,6 +306,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput11"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
                     />
                 </div>
             </div>
@@ -211,6 +322,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput12"
+                        value={companyName}
+                        onChange={(e) => setCompanyName(e.target.value)}
                     />
                 </div>
             </div>
@@ -223,6 +336,8 @@ const ProfileInfo = () => {
                         type="text"
                         className="form-control"
                         id="formGroupExampleInput13"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
                     />
                 </div>
             </div>
@@ -237,6 +352,8 @@ const ProfileInfo = () => {
                         className="form-control"
                         id="exampleFormControlTextarea1"
                         rows="7"
+                        value={aboutMe}
+                        onChange={(e) => setAboutMe(e.target.value)}
                     ></textarea>
                 </div>
             </div>
@@ -244,11 +361,17 @@ const ProfileInfo = () => {
 
             <div className="col-xl-12 text-right">
                 <div className="my_profile_setting_input">
-                    <button className="btn btn1">View Public Profile</button>
-                    <button className="btn btn2">Update Profile</button>
+                    <button className="btn btn2" onClick={handleUpdateProfile} disabled={loading}>
+                        {loading ? "Updating..." : "Update Profile"}
+                    </button>
                 </div>
             </div>
             {/* End .col */}
+            {message && (
+                <div className="col-xl-12">
+                    <div className="alert alert-info mt-3 text-center">{message}</div>
+                </div>
+            )}
         </div>
     );
 };
