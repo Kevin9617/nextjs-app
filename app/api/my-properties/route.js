@@ -3,6 +3,13 @@ import pool from '../../../lib/db';
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
+    // Homepage mode: just return 12 most recent
+    if (searchParams.get('homepage') === '1') {
+      const rows = await pool.query(
+        'SELECT * FROM houseProperty ORDER BY created_at DESC LIMIT 12'
+      );
+      return new Response(JSON.stringify({ properties: rows, total: rows.length }), { status: 200 });
+    }
     const page = parseInt(searchParams.get('page') || '1', 10);
     const pageSize = parseInt(searchParams.get('pageSize') || '10', 10);
     const search = searchParams.get('search') || '';
