@@ -94,7 +94,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
       <td>
         <ul className="view_edit_delete_list mb0">
           <li className="list-inline-item" data-toggle="tooltip" data-placement="top" title="Edit">
-            <a href="#">
+            <a href="#" onClick={e => { e.stopPropagation(); e.preventDefault(); router.push(`/create-listing?id=${item.id}`); }}>
               <span className="flaticon-edit"></span>
             </a>
           </li>

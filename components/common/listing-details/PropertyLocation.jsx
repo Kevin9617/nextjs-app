@@ -2,10 +2,20 @@ import Image from "next/image";
 
 const PropertyLocation = ({ property }) => {
   // Use property.map_url if available, otherwise fallback
-  const mapSrc = property?.map_url ||
-    (property?.lat && property?.lng
-      ? `https://maps.google.com/maps?q=${property.lat},${property.lng}&z=15&output=embed`
-      : "https://www.google.com/maps/d/embed?mid=1tJl0-uRax4AKBfbh1eLPLX5WzOk&hl=en&ehbc=2E312F");
+  let mapSrc = property?.map_url;
+
+  if (!mapSrc) {
+    if (property?.lat && property?.lng) {
+      mapSrc = `https://maps.google.com/maps?q=${property.lat},${property.lng}&z=15&output=embed`;
+    } else if (property?.address || property?.city || property?.state || property?.zip) {
+      // Build address string for Google Maps
+      const addressParts = [property.address, property.city, property.state, property.zip].filter(Boolean);
+      const addressString = encodeURIComponent(addressParts.join(', '));
+      mapSrc = `https://maps.google.com/maps?q=${addressString}&z=15&output=embed`;
+    } else {
+      mapSrc = "https://www.google.com/maps/d/embed?mid=1tJl0-uRax4AKBfbh1eLPLX5WzOk&hl=en&ehbc=2E312F";
+    }
+  }
 
   return (
     <>

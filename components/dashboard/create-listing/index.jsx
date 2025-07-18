@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../../common/header/dashboard/Header";
 import SidebarMenu from "../../common/header/dashboard/SidebarMenu";
 import MobileMenu from "../../common/header/MobileMenu";
@@ -66,6 +66,8 @@ const initialForm = {
 
 const index = () => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   useEffect(() => {
     async function checkRole() {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -89,6 +91,29 @@ const index = () => {
   const [floorPlans, setFloorPlans] = useState([ { ...initialPlan } ]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Fetch property data if editing
+  useEffect(() => {
+    if (!id) return;
+    setLoading(true);
+    fetch(`/api/property/${id}`)
+      .then(res => {
+        if (!res.ok) throw new Error('Not found');
+        return res.json();
+      })
+      .then(data => {
+        // Remove fields not in form, and handle floorPlans
+        const { floorPlans: fetchedFloorPlans, ...rest } = data;
+        setForm(prev => ({ ...prev, ...rest }));
+        if (Array.isArray(fetchedFloorPlans) && fetchedFloorPlans.length > 0) {
+          setFloorPlans(fetchedFloorPlans.map(plan => ({ ...initialPlan, ...plan })));
+        }
+      })
+      .catch(() => {
+        setMessage("Failed to load property data for editing.");
+      })
+      .finally(() => setLoading(false));
+  }, [id]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -136,18 +161,35 @@ const index = () => {
           email = user.email;
         }
       }
-      const res = await fetch("/api/create-listing", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, floorPlans, email }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        setMessage("Listing created successfully!");
-        setForm(initialForm);
-        setFloorPlans([ { ...initialPlan } ]);
+      let res, data;
+      if (id) {
+        // Update existing property
+        res = await fetch(`/api/property/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, floorPlans, email }),
+        });
+        data = await res.json();
+        if (res.ok && data.success) {
+          setMessage("Listing updated successfully!");
+        } else {
+          setMessage(data.error || "Error updating listing");
+        }
       } else {
-        setMessage(data.error || "Error creating listing");
+        // Create new property
+        res = await fetch("/api/create-listing", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...form, floorPlans, email }),
+        });
+        data = await res.json();
+        if (data.success) {
+          setMessage("Listing created successfully!");
+          setForm(initialForm);
+          setFloorPlans([ { ...initialPlan } ]);
+        } else {
+          setMessage(data.error || "Error creating listing");
+        }
       }
     } catch (err) {
       setMessage("Network error");
@@ -200,8 +242,6 @@ const index = () => {
 
                 <div className="col-lg-12 mb10">
                   <div className="breadcrumb_content style2">
-                    <h2 className="breadcrumb_title">Add New Property</h2>
-                    <p>We are glad to see you again!</p>
                   </div>
                 </div>
                 {/* End .col */}
@@ -210,7 +250,6 @@ const index = () => {
                   <div className="my_dashboard_review">
                     <div className="row">
                       <div className="col-lg-12">
-                        <h3 className="mb30">Create Listing</h3>
                       </div>
                       {/* Property Title */}
                       <div className="col-lg-12">

@@ -1,4 +1,7 @@
+export const dynamic = "force-dynamic";
+
 import CreateListing from "@/components/dashboard/create-listing";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Create Listing || FindHouse - Real Estate React Template",
@@ -7,9 +10,9 @@ export const metadata = {
 
 const index = () => {
   return (
-    <>
+    <Suspense fallback={<div>Loading...</div>}>
       <CreateListing />
-    </>
+    </Suspense>
   );
 };
 
