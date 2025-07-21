@@ -95,7 +95,7 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="modal-content">
+    <div className="modal-content" style={{ maxWidth: 400, margin: '0 auto' }}>
       <div className="modal-header">
         <button
           type="button"
@@ -106,7 +106,7 @@ const LoginSignup = () => {
       </div>
       {/* End .modal-header */}
 
-      <div className="modal-body container pb20">
+      <div className="modal-body container pb20" style={{ padding: 24 }}>
         <div className="row">
           <div className="col-lg-12">
             <ul className="sign_up_tab nav nav-tabs" id="myTab" role="tablist">
@@ -152,44 +152,14 @@ const LoginSignup = () => {
             role="tabpanel"
             aria-labelledby="home-tab"
           >
-            <div className="col-lg-6 col-xl-6">
-              <div className="login_thumb">
-                <Image
-                  width={357}
-                  height={494}
-                  className="img-fluid w100 h-100 cover"
-                  src="/assets/images/resource/login.jpg"
-                  alt="login.jpg"
-                />
-              </div>
-            </div>
-            {/* End col */}
-
-            <div className="col-lg-6 col-xl-6">
+            {/* Remove left image, only show form */}
+            <div className="col-12">
               <div className="login_form">
                 <form onSubmit={handleLogin}>
                   <div className="heading">
                     <h4>Login</h4>
                   </div>
                   {/* End heading */}
-
-                  <div className="row mt25">
-                    <div className="col-lg-12">
-                      <button type="button" className="btn btn-fb w-100" disabled>
-                        <i className="fa fa-facebook float-start mt5"></i> Login
-                        with Facebook
-                      </button>
-                    </div>
-                    <div className="col-lg-12">
-                      <button type="button" className="btn btn-googl w-100" disabled>
-                        <i className="fa fa-google float-start mt5"></i> Login
-                        with Google
-                      </button>
-                    </div>
-                  </div>
-                  {/* End .row */}
-
-                  <hr />
 
                   <div className="input-group mb-2 mr-sm-2">
                     <input
@@ -276,20 +246,8 @@ const LoginSignup = () => {
             role="tabpanel"
             aria-labelledby="profile-tab"
           >
-            <div className="col-lg-6 col-xl-6">
-              <div className="regstr_thumb">
-                <Image
-                  width={357}
-                  height={659}
-                  className="img-fluid w100 h-100 cover"
-                  src="/assets/images/resource/regstr.jpg"
-                  alt="regstr.jpg"
-                />
-              </div>
-            </div>
-            {/* End . left side image for register */}
-
-            <div className="col-lg-6 col-xl-6">
+            {/* Remove left image, only show form */}
+            <div className="col-12">
               <div className="sign_up_form">
                 <div className="heading">
                   <h4>Register</h4>

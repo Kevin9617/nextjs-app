@@ -76,22 +76,11 @@ const SidebarMenu = () => {
     { id: 3, name: "Logout", route: "/login", icon: "flaticon-logout" },
   ];
 
-  return (
-    <>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '24px 24px 0 24px' }}>
-        <Image
-          width={45}
-          height={45}
-          className="rounded-circle"
-          src="/assets/images/team/e1.png"
-          alt="avatar"
-        />
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          {userName && <span style={{ color: 'white', fontWeight: 600 }}>{userName}</span>}
-          {userEmail && <span style={{ color: 'white', fontSize: '0.9em', opacity: 0.8 }}>{userEmail}</span>}
-        </div>
-      </div>
-      {/* End user info */}
+  const isAdminMyProperties = userRole === 'admin' && pathname === '/my-properties';
+  const isAdminMinimalSidebar = userRole === 'admin' && (pathname === '/my-properties' || pathname === '/create-listing');
+
+  if (isAdminMinimalSidebar) {
+    return (
       <ul className="sidebar-menu">
         <li className="sidebar_header header">
           <Link href="/">
@@ -104,149 +93,38 @@ const SidebarMenu = () => {
             <span>FindHouse</span>
           </Link>
         </li>
-        {/* End header */}
-
-        <li className="title">
-          <span>Main</span>
-          <ul>
-            <li
-              className={`treeview ${
-                isSinglePageActive("/my-dashboard", pathname)
-                  ? "active"
-                  : ""
-              }`}
-            >
-              <Link href="/my-dashboard">
-                <i className="flaticon-layers"></i>
-                <span> Dashboard</span>
-              </Link>
-            </li>
-            {userRole === 'admin' && (
-              <li
-                className={`treeview ${
-                  isSinglePageActive("/create-listing", pathname)
-                    ? "active"
-                    : ""
-                }`}
-              >
-                <Link href="/create-listing">
-                  <i className="flaticon-plus"></i>
-                  <span> Create Listing</span>
-                </Link>
-              </li>
-            )}
-            <li
-              className={`treeview ${
-                isSinglePageActive("/my-message", pathname)
-                  ? "active"
-                  : ""
-              }`}
-            >
-              <Link href="/my-message">
-                <i className="flaticon-envelope"></i>
-                <span> Message</span>
-              </Link>
-            </li>
-          </ul>
+        <li>
+          <Link href="/create-listing">
+            <i className="flaticon-plus"></i>
+            <span> Create Listing</span>
+          </Link>
         </li>
-        {/* End Main */}
-
-        {userRole === 'admin' && (
-        <li className="title">
-          <span>Manage Listings</span>
-          <ul>
-            <li
-              className={`treeview ${
-                isParentPageActive(myProperties, pathname) ? "active" : ""
-              }`}
-            >
-              <a data-bs-toggle="collapse" href="#my-property">
-                <i className="flaticon-home"></i> <span>My Properties</span>
-                <i className="fa fa-angle-down pull-right"></i>
-              </a>
-              <ul className="treeview-menu collapse" id="my-property">
-                {myProperties.map((item) => (
-                  <li key={item.id}>
-                    <Link href={item.route}>
-                      <i className="fa fa-circle"></i> {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-            {/* end properties */}
-
-            <li
-              className={`treeview ${
-                isParentPageActive(reviews, pathname) ? "active" : ""
-              }`}
-            >
-              <a data-bs-toggle="collapse" href="#review">
-                <i className="flaticon-chat"></i>
-                <span>Reviews</span>
-                <i className="fa fa-angle-down pull-right"></i>
-              </a>
-              <ul className="treeview-menu collapse" id="review">
-                {reviews.map((item) => (
-                  <li key={item.id}>
-                    <Link href={item.route}>
-                      <i className="fa fa-circle"></i> {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
-            {/* End Review */}
-
-            <li
-              className={`treeview ${
-                isSinglePageActive("/my-favourites", pathname)
-                  ? "active"
-                  : ""
-              }`}
-            >
-              <Link href="/my-favourites">
-                <i className="flaticon-magnifying-glass"></i>
-                <span> My Favorites</span>
-              </Link>
-            </li>
-            <li
-              className={`treeview ${
-                isSinglePageActive("/my-saved-search", pathname)
-                  ? "active"
-                  : ""
-              }`}
-            >
-              <Link href="/my-saved-search">
-                <i className="flaticon-magnifying-glass"></i>
-                <span> Saved Search</span>
-              </Link>
-            </li>
-          </ul>
+        <li>
+          <Link href="/my-properties">
+            <i className="flaticon-home"></i>
+            <span> My Properties</span>
+          </Link>
         </li>
-        )}
-        {/* End manage listing */}
-
-        <li className="title">
-          <span>Manage Account</span>
-          <ul>
-            {manageAccount.map((item) => (
-              <li
-                className={
-                  isSinglePageActive(item.route, pathname) ? "active" : ""
-                }
-                key={item.id}
-              >
-                <Link href={item.route}>
-                  <i className={item.icon}></i> <span>{item.name}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <li>
+          <a href="/" onClick={e => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            setUserName("");
+            setUserEmail("");
+            setUserRole("");
+            window.dispatchEvent(new Event("logout"));
+            window.location.href = "/";
+          }}>
+            <i className="flaticon-logout"></i>
+            <span> Logout</span>
+          </a>
         </li>
       </ul>
-    </>
-  );
+    );
+  }
+
+  // For all other users/pages, show nothing or an empty sidebar
+  return <></>;
 };
 
 export default SidebarMenu;

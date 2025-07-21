@@ -37,10 +37,6 @@ const MyAccount = ({ onLogout }) => {
   }, []);
 
   const profileMenuItems = [
-    { id: 1, name: "My Profile", ruterPath: "/my-profile" },
-    { id: 2, name: " My Message", ruterPath: "/my-message" },
-    { id: 3, name: " My Favourite", ruterPath: "/my-favourites" },
-    { id: 4, name: " My Package", ruterPath: "/my-package" },
     { id: 5, name: " Log out", ruterPath: "/login", isLogout: true },
   ];
 
@@ -64,13 +60,14 @@ const MyAccount = ({ onLogout }) => {
         {profileMenuItems.map((item) =>
           item.isLogout ? (
             <a
-              href="#"
+              href="/"
               key={item.id}
               className="dropdown-item"
               style={{ color: isSinglePageActive(`${item.ruterPath}`, pathname) ? "#ff5a5f" : "#222", transition: 'color 0.2s' }}
               onClick={e => {
                 e.preventDefault();
                 if (onLogout) onLogout();
+                window.location.href = "/";
               }}
             >
               {item.name}

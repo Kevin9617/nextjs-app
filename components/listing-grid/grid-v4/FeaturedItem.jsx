@@ -190,9 +190,7 @@ const FeaturedItem = () => {
             <div className="tc_content">
               <p className="text-thm">{item.type}</p>
               <h4>
-                <Link href={`/listing-details-v2/${item.slug || item.id}`}>
-                  {item.title}
-                </Link>
+                <Link href={`/${item.slug || item.id}`}>{item.title}</Link>
               </h4>
               <p>
                 <span className="flaticon-placeholder"></span>

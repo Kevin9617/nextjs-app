@@ -50,7 +50,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
   let tbodyContent = properties.map((item) => (
     <tr key={item.id}
         style={{ cursor: 'pointer' }}
-        onClick={() => router.push(`/listing-details-v2/${item.slug || item.id}`)}
+        onClick={() => router.push(`/${item.slug || item.id}`)}
         onMouseOver={e => e.currentTarget.style.background = '#f5f5f5'}
         onMouseOut={e => e.currentTarget.style.background = ''}
     >

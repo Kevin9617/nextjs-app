@@ -167,9 +167,7 @@ const FeaturedItem = () => {
                 <small>/mo</small>
               </Link>
               <h4>
-                <Link href={`/listing-details-v2/${item.slug || item.id}`}>
-                  {item.title}
-                </Link>
+                <Link href={`/${item.slug || item.id}`}>{item.title}</Link>
               </h4>
               <ul className="prop_details mb0">
                 {item.itemDetails.map((val, i) => (
