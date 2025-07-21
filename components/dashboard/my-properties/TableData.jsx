@@ -50,7 +50,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
   let tbodyContent = properties.map((item) => (
     <tr key={item.id}
         style={{ cursor: 'pointer' }}
-        onClick={() => router.push(`/listing-details-v2/${item.id}`)}
+        onClick={() => router.push(`/listing-details-v2/${item.slug || item.id}`)}
         onMouseOver={e => e.currentTarget.style.background = '#f5f5f5'}
         onMouseOut={e => e.currentTarget.style.background = ''}
     >
@@ -94,7 +94,7 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
       <td>
         <ul className="view_edit_delete_list mb0">
           <li className="list-inline-item" data-toggle="tooltip" data-placement="top" title="Edit">
-            <a href="#" onClick={e => { e.stopPropagation(); e.preventDefault(); router.push(`/create-listing?id=${item.id}`); }}>
+            <a href="#" onClick={e => { e.stopPropagation(); e.preventDefault(); router.push(`/create-listing?slug=${item.slug}`); }}>
               <span className="flaticon-edit"></span>
             </a>
           </li>

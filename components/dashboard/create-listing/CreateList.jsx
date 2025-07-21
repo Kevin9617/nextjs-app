@@ -7,7 +7,13 @@ const CreateList = () => {
           <input type="text" className="form-control" id="propertyTitle" />
         </div>
       </div>
-      {/* End .col */}
+      
+      <div className="col-lg-12">
+        <div className="my_profile_setting_input form-group">
+          <label htmlFor="propertySlugs">Slugs</label>
+          <input type="text" className="form-control" id="propertySlugs" />
+        </div>
+      </div>
 
       <div className="col-lg-12">
         <div className="my_profile_setting_textarea">

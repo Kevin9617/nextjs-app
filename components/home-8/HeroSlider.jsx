@@ -129,7 +129,7 @@ const HeroSlider = () => {
                               </ul>
                               <p className="text-thm">{item.type}</p>
                               <h4>
-                                <Link href={`/listing-details-v2/${item.id}`}>
+                                <Link href={`/listing-details-v2/${item.slug || item.id}`}>
                                   {item.title}
                                 </Link>
                               </h4>

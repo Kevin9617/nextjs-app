@@ -62,12 +62,13 @@ const initialForm = {
   planImage: "",
   pricePostfix: "",
   planTitle: "",
+  slug: "",
 };
 
 const index = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const slug = searchParams.get("slug");
   useEffect(() => {
     async function checkRole() {
       const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -94,9 +95,9 @@ const index = () => {
 
   // Fetch property data if editing
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
     setLoading(true);
-    fetch(`/api/property/${id}`)
+    fetch(`/api/property/${slug}`)
       .then(res => {
         if (!res.ok) throw new Error('Not found');
         return res.json();
@@ -113,7 +114,7 @@ const index = () => {
         setMessage("Failed to load property data for editing.");
       })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -162,9 +163,9 @@ const index = () => {
         }
       }
       let res, data;
-      if (id) {
+      if (slug) {
         // Update existing property
-        res = await fetch(`/api/property/${id}`, {
+        res = await fetch(`/api/property/${slug}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...form, floorPlans, email }),
@@ -256,6 +257,12 @@ const index = () => {
                         <div className="my_profile_setting_input form-group">
                           <label htmlFor="propertyTitle">Property Title</label>
                           <input type="text" className="form-control" id="propertyTitle" value={form.propertyTitle} onChange={handleChange} />
+                        </div>
+                      </div>
+                      <div className="col-lg-12">
+                        <div className="my_profile_setting_input form-group">
+                          <label htmlFor="slug">Slug</label>
+                          <input type="text" className="form-control" id="slug" value={form.slug} onChange={handleChange} />
                         </div>
                       </div>
                       {/* Description */}

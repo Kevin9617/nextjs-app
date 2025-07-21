@@ -17,24 +17,25 @@ export async function POST(req) {
       media_image1, media_image2, media_image3, media_image4, media_image5,
       attachment1, attachment2,
       floorPlans,
-      email // <-- user email
+      email, // <-- user email
+      slug
     } = body;
 
-    // Insert property (now includes email)
+    // Insert property (now includes email and slug)
     const result = await pool.query(
       `INSERT INTO houseProperty (
         propertyTitle, propertyDescription, type, status, price, area, rooms,
         address, state, city, neighborhood, zip, country,
         propertyId, areaSize, sizePrefix, landArea, landAreaSizePostfix,
         bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
-        media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2, email
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2, email, slug
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         emptyToNull(propertyTitle), emptyToNull(propertyDescription), emptyToNull(type), emptyToNull(status), emptyToNull(price), emptyToNull(area), emptyToNull(rooms),
         emptyToNull(address), emptyToNull(state), emptyToNull(city), emptyToNull(neighborhood), emptyToNull(zip), emptyToNull(country),
         emptyToNull(propertyId), emptyToNull(areaSize), emptyToNull(sizePrefix), emptyToNull(landArea), emptyToNull(landAreaSizePostfix),
         emptyToNull(bedrooms), emptyToNull(bathrooms), emptyToNull(garages), emptyToNull(garagesSize), emptyToNull(yearBuilt), emptyToNull(videoUrl), emptyToNull(virtualTour),
-        emptyToNull(media_image1), emptyToNull(media_image2), emptyToNull(media_image3), emptyToNull(media_image4), emptyToNull(media_image5), emptyToNull(attachment1), emptyToNull(attachment2), emptyToNull(email)
+        emptyToNull(media_image1), emptyToNull(media_image2), emptyToNull(media_image3), emptyToNull(media_image4), emptyToNull(media_image5), emptyToNull(attachment1), emptyToNull(attachment2), emptyToNull(email), emptyToNull(slug)
       ]
     );
     const houseId = Number(result.insertId);

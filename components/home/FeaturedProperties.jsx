@@ -43,7 +43,7 @@ const FeaturedProperties = () => {
 
   let content = properties?.map((item) => (
     <div className="item" key={item.id} style={{ display: 'flex', justifyContent: 'center' }}>
-      <Link href={`/listing-details-v2/${item.id}`} style={{ textDecoration: 'none', width: 370, maxWidth: 370, height: 540, display: 'block', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+      <Link href={`/listing-details-v2/${item.slug || item.id}`} style={{ textDecoration: 'none', width: 370, maxWidth: 370, height: 540, display: 'block', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
         <div
           className="feat_property"
           style={{

@@ -12,16 +12,17 @@ import ListingGallery2 from "@/components/common/listing-details/ListingGallery2
 import { useParams } from "next/navigation";
 
 const ListingDynamicDetailsV2 = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!id) return;
+    if (!slug) return;
     setLoading(true);
-    fetch(`/api/property/${id}`)
+    fetch(`/api/property/${slug}`)
       .then(res => {
+        console.log(res);
         if (!res.ok) throw new Error('Not found');
         return res.json();
       })
@@ -34,7 +35,7 @@ const ListingDynamicDetailsV2 = () => {
         setNotFound(true);
       })
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
 
   if (loading) {
     return <div style={{padding: 40, textAlign: 'center'}}><h2>Loading...</h2></div>;
