@@ -81,7 +81,7 @@ const FeaturedProperties = () => {
               </ul>
               {/* End .icon */}
               <span className="fp_price" style={{position: 'absolute', left: 16, bottom: 16, color: '#fff', fontWeight: 700, fontSize: 28, textShadow: '0 2px 8px rgba(0,0,0,0.2)'}}>
-                ${item.price}<small>/mo</small>
+                ${item.price}
               </span>
             </div>
           </div>

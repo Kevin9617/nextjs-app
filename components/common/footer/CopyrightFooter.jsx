@@ -3,8 +3,8 @@ import Link from "next/link";
 const CopyrightFooter = () => {
 
   return (
-    <div className="row">
-      <div className="col-lg-6 col-xl-6">
+    <div className="row" style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div className="col-lg-6 col-xl-6" style={{ flex: '0 0 auto' }}>
         <div className="copyright-widget text-end">
           <p>
             &copy; {new Date().getFullYear()} by{" "}
@@ -13,7 +13,7 @@ const CopyrightFooter = () => {
               target="_blank"
               rel="noreferrer"
             >
-              ib-themes
+              Pine
             </a>
             . All rights reserved.
           </p>

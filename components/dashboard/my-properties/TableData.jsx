@@ -64,13 +64,6 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
               src={item.media_image1 ? `/api/image?filename=${item.media_image1}` : "/assets/images/property/default.jpg"}
               alt={item.title || "property"}
             />
-            <div className="thmb_cntnt">
-              <ul className="tag mb0">
-                <li className="list-inline-item">
-                  <a href="#">For Rent</a>
-                </li>
-              </ul>
-            </div>
           </div>
           <div className="details">
             <div className="tc_content">
@@ -81,7 +74,6 @@ const TableData = ({ search, filter, page, onTotalChange }) => {
               </p>
               <a className="fp_price text-thm" href="#">
                 ${item.price}
-                <small>/mo</small>
               </a>
             </div>
           </div>

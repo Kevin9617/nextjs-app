@@ -164,7 +164,6 @@ const FeaturedItem = () => {
                 className="fp_price"
               >
                 ${item.price}
-                <small>/mo</small>
               </Link>
               <h4>
                 <Link href={`/${item.slug || item.id}`}>{item.title}</Link>

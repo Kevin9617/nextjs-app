@@ -85,9 +85,9 @@ const SidebarMenu = () => {
         <li className="sidebar_header header">
           <Link href="/">
             <Image
-              width={80}
-              height={90}
-              src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
+              width={160}
+              height={45}
+              src="https://meetpine.com/wp-content/uploads/2022/12/Pine_monochrome_white.svg"
               alt="PINE logo"
             />
           </Link>

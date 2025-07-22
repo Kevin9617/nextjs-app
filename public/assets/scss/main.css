@@ -1198,11 +1198,11 @@ header.header-nav a.navbar_brand .logo2 {
 header.header-nav.menu_style_home_one ul.ace-responsive-menu li.add_listing {
   background-color: #fff;
   border-radius: 25px;
-  height: 50px;
+  height: 40px;
   position: relative;
   text-align: center;
   vertical-align: middle;
-  width: 180px;
+  width: 120px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1691,7 +1691,7 @@ header.header-nav.menu_style_home_one.style3 ul.ace-responsive-menu li.add_listi
 }
 
 header.header-nav.menu_style_home_one.style2 ul.ace-responsive-menu li.add_listing a {
-  font-size: 16px;
+  font-size: 12px;
   font-family: "Nunito";
   color: #ffffff;
   line-height: 1;
@@ -5465,7 +5465,7 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
 
 .status_tag.badge {
   border-radius: 3px;
-  background-color: rgb(255, 90, 95);
+  background-color: #439456;
   font-size: 14px;
   font-family: "Nunito";
   color: rgb(254, 254, 254);

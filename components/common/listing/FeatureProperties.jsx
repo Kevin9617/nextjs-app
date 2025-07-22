@@ -40,7 +40,6 @@ const FeatureProperties = () => {
                   </ul>
                   <a className="fp_price" href="#">
                     ${item.price}
-                    <small>/mo</small>
                   </a>
                   <h4 className="posr color-white">{item.title}</h4>
                 </div>

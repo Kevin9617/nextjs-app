@@ -31,7 +31,7 @@ const Header = () => {
             width={80}
             height={90}
             className="logo1 img-fluid"
-            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
+            src="/assets/images/logo.png"
             alt="PINE logo"
             style={{marginRight: 0}}
           />

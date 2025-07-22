@@ -53,7 +53,6 @@ const index = () => {
                   <div className="price">
                     <h2>
                       ${DEMO_PROPERTY.price}
-                      <small>/mo</small>
                     </h2>
                   </div>
                 </div>

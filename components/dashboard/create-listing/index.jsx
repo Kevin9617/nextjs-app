@@ -200,11 +200,6 @@ const index = () => {
 
   return (
     <>
-      {/* <!-- Main Header Nav --> */}
-      <Header />
-
-      {/* <!--  Mobile Menu --> */}
-      <MobileMenu />
 
       <div className="dashboard_sidebar_menu">
         <div
@@ -217,6 +212,11 @@ const index = () => {
         </div>
       </div>
       {/* End sidebar_menu */}
+      {/* <!-- Main Header Nav --> */}
+      <Header />
+
+  {/* <!--  Mobile Menu --> */}
+  <MobileMenu />
 
       {/* <!-- Our Dashbord --> */}
       <section className="our-dashbord dashbord bgc-f7 pb50">
@@ -487,7 +487,7 @@ const index = () => {
                         <div style={{textAlign: 'right', marginBottom: 24}}>
                           <button
                             type="button"
-                            className="btn btn-danger"
+                            style={{backgroundColor: '#439456', color: 'white', border: 'none'}}
                             onClick={() => setFloorPlans(prev => prev.filter((_, i) => i !== idx))}
                             disabled={floorPlans.length === 1}
                           >
@@ -506,7 +506,7 @@ const index = () => {
                         style={{
                           width: '250px',
                           height: '60px',
-                          background: '#ff5a5f',
+                          background: '#439456',
                           color: 'white',
                           fontSize: '1.3rem',
                           border: 'none',

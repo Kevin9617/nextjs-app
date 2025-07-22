@@ -26,20 +26,29 @@ const Header = () => {
         navbar ? "stricky-fixed " : "stricky-fixed"
       }`}
     >
-      <div className="container-fluid p0" style={{display: 'flex', alignItems: 'top', justifyContent: 'space-between', height: 80}}>
-        <Link href="https://meetpine.com/" className="navbar_brand float-start dn-smd">
-          <Image
+      <div className="container-fluid p0" style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 80}}>
+      <Link
+  href="https://meetpine.com/"
+  className="navbar_brand float-start dn-smd"
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    height: '100%',
+    marginTop: '0px', // move upward slightly
+  }}
+>
+    <Image
             width={80}
             height={80}
             className="logo1 contain"
-            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_monochrome_white.svg"
+            src="/assets/images/logo.png"
             alt="header-logo.png"
           />
           <Image
             width={80}
             height={80}
             className="logo2 contain"
-            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
+            src="/assets/images/logo.png"
             alt="header-logo2.png"
           />
         </Link>

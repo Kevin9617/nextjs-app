@@ -22,7 +22,7 @@ const FeaturedListings = () => {
               <Link href={`/listing-details-v1/${item.id}`}>{item.title}</Link>
             </h5>
             <Link href={`/listing-details-v1/${item.id}`}>
-              ${item.price}/<small>/mo</small>
+              ${item.price}
             </Link>
 
             <ul className="mb0">
