@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "photoswipe/dist/photoswipe.css";
 import CopyrightFooter from "@/components/common/footer/CopyrightFooter";
 import Footer from "@/components/common/footer/Footer";
-import Header from "@/components/common/header/DefaultHeader";
+import Header from "@/components/home/Header";
 import MobileMenu from "@/components/common/header/MobileMenu";
 import PopupSignInUp from "@/components/common/PopupSignInUp";
 import DetailsContent from "@/components/listing-details-v2/DetailsContent";

@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <header
       className={`header-nav menu_style_home_one navbar-scrolltofixed stricky main-menu  ${
-        navbar ? "stricky-fixed " : ""
+        navbar ? "stricky-fixed " : "stricky-fixed"
       }`}
     >
       <div className="container-fluid p0" style={{display: 'flex', alignItems: 'top', justifyContent: 'space-between', height: 80}}>

@@ -29,7 +29,7 @@ export async function POST(req) {
         propertyId, areaSize, sizePrefix, landArea, landAreaSizePostfix,
         bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
         media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2, email, slug
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         emptyToNull(propertyTitle), emptyToNull(propertyDescription), emptyToNull(status), emptyToNull(price), emptyToNull(area), emptyToNull(rooms),
         emptyToNull(address), emptyToNull(state), emptyToNull(city), emptyToNull(neighborhood), emptyToNull(zip), emptyToNull(country),
