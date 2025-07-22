@@ -35,7 +35,7 @@ const PropertyLocation = ({ property }) => {
               width={40}
               height={45}
               className="map_img_icon"
-              src="/assets/images/header-logo.png"
+              src="https://meetpine.com/wp-content/uploads/2022/12/Pine_monochrome_white.svg"
               alt="header-logo.png"
             />
           </a>

@@ -10,8 +10,8 @@ const MobileMenu = () => {
         <div className="header stylehome1">
           <div className="main_logo_home2 text-center">
             <Image
-              width={40}
-              height={45}
+              width={80}
+              height={90}
               className="nav_logo_img contain mt20"
               src="/assets/images/header-logo2.png"
               alt="header-logo2.png"

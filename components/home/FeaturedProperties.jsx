@@ -88,11 +88,10 @@ const FeaturedProperties = () => {
           {/* End .thumb */}
           <div className="details" style={{ padding: '24px 24px 24px 12px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start' }}>
             <div className="tc_content">
-              <p className="text-thm" style={{color: '#ff5a5f', fontWeight: 600, marginBottom: 4}}>{item.type}</p>
-              <h4 style={{fontWeight: 700, fontSize: 22, marginBottom: 8}}>
+              <h4 style={{color: '#439456', fontWeight: 700, fontSize: 27, marginBottom: 23}}>
                 {item.propertyTitle}
               </h4>
-              <p style={{color: '#6c757d', marginBottom: 12}}>
+              <p style={{color: '#6c757d', marginBottom: 24, fontSize: 20}}>
                 <span className="flaticon-placeholder"></span>
                 {item.address}, {item.city}, {item.state} {item.zip}
               </p>

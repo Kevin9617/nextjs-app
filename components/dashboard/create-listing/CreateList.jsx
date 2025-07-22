@@ -29,24 +29,6 @@ const CreateList = () => {
 
       <div className="col-lg-6 col-xl-6">
         <div className="my_profile_setting_input ui_kit_select_search form-group">
-          <label>Type</label>
-          <select
-            className="selectpicker form-select"
-            data-live-search="true"
-            data-width="100%"
-          >
-            <option data-tokens="type1">Type1</option>
-            <option data-tokens="Type2">Type2</option>
-            <option data-tokens="Type3">Type3</option>
-            <option data-tokens="Type4">Type4</option>
-            <option data-tokens="Type5">Type5</option>
-          </select>
-        </div>
-      </div>
-      {/* End .col */}
-
-      <div className="col-lg-6 col-xl-6">
-        <div className="my_profile_setting_input ui_kit_select_search form-group">
           <label>Status</label>
           <select
             className="selectpicker form-select"

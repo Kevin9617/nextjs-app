@@ -148,15 +148,8 @@ const HeaderMenuContent = ({ float = "" }) => {
                 onClick={() => setShowDropdown(!showDropdown)}
                 style={{ display: 'flex', alignItems: 'center', gap: 12 }}
               >
-                <Image
-                  width={45}
-                  height={45}
-                  className="rounded-circle"
-                  src="/assets/images/team/e1.png"
-                  alt="e1.png"
-                />
                 <span style={{ color: 'black', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                  {userName && <span>{userName}</span>}
+                  {userEmail && <span>{userEmail}</span>}
                 </span>
               </a>
               {showDropdown && (

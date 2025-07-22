@@ -8,7 +8,7 @@ export async function GET(request, { params }) {
   let conn;
   try {
     conn = await pool.getConnection();
-    const rows = await conn.query('SELECT * FROM houseproperty WHERE slug = ?', [slug]);
+    const rows = await conn.query('SELECT * FROM houseProperty WHERE slug = ?', [slug]);
     if (!rows || rows.length === 0) {
       return new Response(JSON.stringify({ error: 'Property not found' }), { status: 404 });
     }
@@ -37,7 +37,7 @@ export async function PUT(request, { params }) {
   try {
     conn = await pool.getConnection();
     // Find property by slug to get its id
-    const rows = await conn.query('SELECT * FROM houseproperty WHERE slug = ?', [slug]);
+    const rows = await conn.query('SELECT * FROM houseProperty WHERE slug = ?', [slug]);
     if (!rows || rows.length === 0) {
       return new Response(JSON.stringify({ error: 'Property not found' }), { status: 404 });
     }

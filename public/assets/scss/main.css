@@ -1663,7 +1663,7 @@ header.header-nav.menu_style_home_one.style2 ul.ace-responsive-menu li.list_s:be
   position: absolute;
   right: 0;
   top: 26px;
-  width: 1px;
+  width: 0px;
 }
 
 header.header-nav.menu_style_home_one.style2.home10 ul.ace-responsive-menu li.list_s:before {
@@ -8321,11 +8321,11 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
 }
 
 .footer_one {
-  background-color: #24324a;
+  background-color: #000000;
 }
 
 .footer_middle_area {
-  background-color: #1d293e;
+  background-color: #000000;
 }
 
 .footer_bottom_area {
@@ -8402,7 +8402,7 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
 
 /*== Footer Widget ==*/
 .footer_about_widget p {
-  font-size: 14px;
+  font-size: 18px;
   font-family: "Nunito";
   color: #8a99b3;
   line-height: 2.143;
@@ -8445,7 +8445,8 @@ form.home5_advanced_search_form .form-group input.form-control::-ms-input-placeh
 .footer_apps_widget h4 {
   color: #ffffff;
   font-weight: bold;
-  margin-bottom: 25px;
+  margin-bottom: 14px;
+  font-size: 25px;
 }
 
 .home3 .footer_about_widget h4,
@@ -10618,7 +10619,7 @@ a.btn.btn_error {
   border: 1px solid #506dab;
   border-radius: 8px;
   color: #506dab;
-  font-size: 14px;
+  font-size: 20px;
   height: 52px;
   margin-bottom: 20px;
   padding-left: 20px;
@@ -13192,7 +13193,7 @@ legend span {
   height: 38px;
   position: absolute;
   top: 10px;
-  width: 1px;
+  width: 0px;
 }
 
 .user_setting .btn {

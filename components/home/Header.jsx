@@ -26,25 +26,22 @@ const Header = () => {
         navbar ? "stricky-fixed " : ""
       }`}
     >
-      <div className="container-fluid p0">
-        {/* <!-- Ace Responsive Menu --> */}
-
-        <Link href="/" className="navbar_brand float-start dn-smd">
+      <div className="container-fluid p0" style={{display: 'flex', alignItems: 'top', justifyContent: 'space-between', height: 80}}>
+        <Link href="https://meetpine.com/" className="navbar_brand float-start dn-smd">
           <Image
-            width={40}
-            height={45}
+            width={80}
+            height={80}
             className="logo1 contain"
-            src="/assets/images/header-logo.png"
+            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_monochrome_white.svg"
             alt="header-logo.png"
           />
           <Image
-            width={40}
-            height={45}
+            width={80}
+            height={80}
             className="logo2 contain"
-            src="/assets/images/header-logo2.png"
+            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
             alt="header-logo2.png"
           />
-          <span>FindHouse</span>
         </Link>
         {/* site logo brand */}
 

@@ -10,7 +10,7 @@ export async function POST(req) {
   try {
     const body = await req.json();
     const {
-      propertyTitle, propertyDescription, type, status, price, area, rooms,
+      propertyTitle, propertyDescription, status, price, area, rooms,
       address, state, city, neighborhood, zip, country,
       propertyId, areaSize, sizePrefix, landArea, landAreaSizePostfix,
       bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
@@ -24,14 +24,14 @@ export async function POST(req) {
     // Insert property (now includes email and slug)
     const result = await pool.query(
       `INSERT INTO houseProperty (
-        propertyTitle, propertyDescription, type, status, price, area, rooms,
+        propertyTitle, propertyDescription, status, price, area, rooms,
         address, state, city, neighborhood, zip, country,
         propertyId, areaSize, sizePrefix, landArea, landAreaSizePostfix,
         bedrooms, bathrooms, garages, garagesSize, yearBuilt, videoUrl, virtualTour,
         media_image1, media_image2, media_image3, media_image4, media_image5, attachment1, attachment2, email, slug
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
-        emptyToNull(propertyTitle), emptyToNull(propertyDescription), emptyToNull(type), emptyToNull(status), emptyToNull(price), emptyToNull(area), emptyToNull(rooms),
+        emptyToNull(propertyTitle), emptyToNull(propertyDescription), emptyToNull(status), emptyToNull(price), emptyToNull(area), emptyToNull(rooms),
         emptyToNull(address), emptyToNull(state), emptyToNull(city), emptyToNull(neighborhood), emptyToNull(zip), emptyToNull(country),
         emptyToNull(propertyId), emptyToNull(areaSize), emptyToNull(sizePrefix), emptyToNull(landArea), emptyToNull(landAreaSizePostfix),
         emptyToNull(bedrooms), emptyToNull(bathrooms), emptyToNull(garages), emptyToNull(garagesSize), emptyToNull(yearBuilt), emptyToNull(videoUrl), emptyToNull(virtualTour),

@@ -30,20 +30,19 @@ const Header = () => {
         {/* <!-- Menu Toggle btn--> */}
         <Link href="/" className="navbar_brand float-start dn-smd">
           <Image
-            width={40}
-            height={45}
+            width={80}
+            height={90}
             className="logo1 img-fluid"
-            src="/assets/images/header-logo2.png"
+            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
             alt="header-logo2.png"
           />
           <Image
-            width={40}
-            height={45}
+            width={80}
+            height={90}
             className="logo2 img-fluid"
-            src="/assets/images/header-logo2.png"
+            src="https://meetpine.com/wp-content/uploads/2022/12/Pine_color-for-light-BG.svg"
             alt="header-logo2.png"
           />
-          <span>FindHouse</span>
         </Link>
         {/* site logo brand */}
 
